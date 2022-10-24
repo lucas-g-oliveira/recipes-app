@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from 'react';
+import PropTypes from 'prop-types';
 import AppContext from './AppContext';
 
 function Provider({ children }) {
