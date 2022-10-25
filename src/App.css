@@ -16,14 +16,14 @@
 }
 
 footer {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
   background-color: rgb(14, 196, 165);
-  padding: 10px;
+  bottom: 0;
   color: white;
+  left: 0;
+  padding: 10px;
+  position: fixed;
   text-align: center;
+  width: 100%;
 }
 
 /*
