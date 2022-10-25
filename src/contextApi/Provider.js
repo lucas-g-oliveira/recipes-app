@@ -40,14 +40,34 @@ function Provider({ children }) {
     console.log(data);
   }, [searchByType]);
 
-  const handleClickApi = useCallback(() => {
+  const fetchDrinksApi = useCallback(async () => {
+    const { valueToSearch, option } = searchByType;
+    const ingredientEndpoint = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${valueToSearch}`;
+    const nameEndpoint = `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${valueToSearch}`;
+    const firstLetterEndpoint = `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${valueToSearch}`;
+
+    let response;
+    if (option === 'ingredientes') {
+      response = await fetch(ingredientEndpoint);
+    } else if (option === 'name') {
+      response = await fetch(nameEndpoint);
+    } else {
+      response = await fetch(firstLetterEndpoint);
+    }
+    const data = await response.json();
+    console.log(data);
+  }, [searchByType]);
+
+  const handleClickApi = useCallback((pathname) => {
     const { valueToSearch, option } = searchByType;
     if (option === 'primeiraLetra' && valueToSearch.length > 1) {
       global.alert('Your search must have only 1 (one) character');
-    } else {
+    } else if (pathname === '/meals') {
       fetchMealsApi();
+    } else {
+      fetchDrinksApi();
     }
-  }, [fetchMealsApi, searchByType]);
+  }, [fetchMealsApi, fetchDrinksApi, searchByType]);
 
   const context = useMemo(() => ({
     searchBtn,

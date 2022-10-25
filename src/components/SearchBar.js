@@ -1,9 +1,12 @@
 import React, { useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import AppContext from '../contextApi/AppContext';
 
 function SearchBar() {
   const { handleSearchChange, handleClickApi } = useContext(AppContext);
-
+  // const history = useHistory();
+  // const { location: { pathname } } = history;
+  const { location: { pathname } } = useHistory();
   return (
     <div>
       <input
@@ -48,7 +51,7 @@ function SearchBar() {
       <button
         type="submit"
         data-testid="exec-search-btn"
-        onClick={ handleClickApi }
+        onClick={ () => handleClickApi(pathname) }
       >
         Buscar
       </button>
