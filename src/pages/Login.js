@@ -44,7 +44,7 @@ class Login extends React.Component {
     const { email, password, validarB, next } = this.state;
     return (
       next ? <Redirect
-        to={ { pathname: '/' } }
+        to={ { pathname: '/meals' } }
       /> : (
         <>
           <h1>Login</h1>
