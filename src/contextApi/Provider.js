@@ -8,6 +8,8 @@ function Provider({ children }) {
     valueToSearch: '',
     option: '',
   });
+  const [mealsResults, setMealsResults] = useState([]);
+  const [drinksResults, setDrinksResults] = useState([]);
 
   const showsearchBtn = useCallback(() => {
     setSearchBtn(!searchBtn);
@@ -15,11 +17,7 @@ function Provider({ children }) {
 
   const handleSearchChange = useCallback(({ target }) => {
     const { name, value } = target;
-    // const { valueToSearch, option } = searchByType;
     setSearchByType({ ...searchByType, [name]: value });
-    // if (option === 'primeiraLetra' && valueToSearch.length > 1) {
-    //   global.alert('Your search must have only 1 (one) character');
-    // }
   }, [searchByType]);
 
   const fetchMealsApi = useCallback(async () => {
@@ -37,24 +35,53 @@ function Provider({ children }) {
       response = await fetch(firstLetterEndpoint);
     }
     const data = await response.json();
-    console.log(data);
+    setMealsResults(data.meals);
   }, [searchByType]);
 
-  const handleClickApi = useCallback(() => {
+  const fetchDrinksApi = useCallback(async () => {
+    const { valueToSearch, option } = searchByType;
+    const ingredientEndpoint = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${valueToSearch}`;
+    const nameEndpoint = `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${valueToSearch}`;
+    const firstLetterEndpoint = `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${valueToSearch}`;
+
+    let response;
+    if (option === 'ingredientes') {
+      response = await fetch(ingredientEndpoint);
+    } else if (option === 'name') {
+      response = await fetch(nameEndpoint);
+    } else {
+      response = await fetch(firstLetterEndpoint);
+    }
+    const data = await response.json();
+    setDrinksResults(data.drinks);
+  }, [searchByType]);
+
+  const handleClickApi = useCallback((pathname) => {
     const { valueToSearch, option } = searchByType;
     if (option === 'primeiraLetra' && valueToSearch.length > 1) {
       global.alert('Your search must have only 1 (one) character');
-    } else {
+    } else if (pathname === '/meals') {
       fetchMealsApi();
+    } else {
+      fetchDrinksApi();
     }
-  }, [fetchMealsApi, searchByType]);
+  }, [fetchMealsApi, fetchDrinksApi, searchByType]);
 
   const context = useMemo(() => ({
     searchBtn,
     showsearchBtn,
+    mealsResults,
+    drinksResults,
     handleSearchChange,
     handleClickApi,
-  }), [searchBtn, showsearchBtn, handleSearchChange, handleClickApi]);
+  }), [
+    searchBtn,
+    showsearchBtn,
+    mealsResults,
+    drinksResults,
+    handleSearchChange,
+    handleClickApi,
+  ]);
 
   return (
     <AppContext.Provider value={ context }>
