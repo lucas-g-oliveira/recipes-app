@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { Redirect } from 'react-router-dom';
 import Header from '../components/Header';
 import AppContext from '../contextApi/AppContext';
+import Footer from '../components/Footer';
 
 function Meals() {
   const { mealsResults } = useContext(AppContext);
@@ -28,6 +29,7 @@ function Meals() {
           ))
         }
       </div>
+      <Footer />
     </div>
   );
 }

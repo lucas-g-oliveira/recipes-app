@@ -1,4 +1,3 @@
-import proptypes from 'prop-types';
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { saveEmail } from '../Services/userStorage';
@@ -80,7 +79,3 @@ class Login extends React.Component {
 }
 
 export default Login;
-
-Login.propTypes = {
-  dispatch: proptypes,
-}.isRequired;
