@@ -1,14 +1,18 @@
-import React, { useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import AppContext from './AppContext';
 
 function Provider({ children }) {
-  const [stateTemp, setStateTemp] = useState();
+  const [searchBtn, setSearchBtn] = useState(false);
+
+  const showsearchBtn = useCallback(() => {
+    setSearchBtn(!searchBtn);
+  }, [searchBtn]);
 
   const context = useMemo(() => ({
-    stateTemp,
-    setStateTemp,
-  }), [stateTemp]);
+    searchBtn,
+    showsearchBtn,
+  }), [searchBtn, showsearchBtn]);
 
   return (
     <AppContext.Provider value={ context }>
