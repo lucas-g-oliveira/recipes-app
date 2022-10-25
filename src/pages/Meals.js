@@ -5,18 +5,26 @@ import AppContext from '../contextApi/AppContext';
 
 function Meals() {
   const { mealsResults } = useContext(AppContext);
-
+  const doze = 12;
+  const mealsMap = mealsResults.slice(0, doze);
   return (
     <div>
       <Header />
       <div>
         {
           mealsResults.length === 1
-            && <Redirect to={ `/meals/${mealsResults[0].idMeal}` } />
+          && <Redirect to={ `/meals/${mealsResults[0].idMeal}` } />
         }
         {
-          mealsResults.map((meal) => (
-            <p key={ meal.idMeal }>{meal.strMeal}</p>
+          mealsMap.map((meal, index) => (
+            <div key={ meal.idMeal } data-testid={ `${index}-recipe-card` }>
+              <img
+                data-testid={ `${index}-card-img` }
+                src={ meal.strMealThumb }
+                alt={ meal.strMeal }
+              />
+              <p data-testid={ `${index}-card-name` }>{meal.strMeal}</p>
+            </div>
           ))
         }
       </div>

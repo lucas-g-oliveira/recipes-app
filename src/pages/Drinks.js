@@ -5,6 +5,8 @@ import AppContext from '../contextApi/AppContext';
 
 function Drinks() {
   const { drinksResults } = useContext(AppContext);
+  const doze = 12;
+  const drinksMap = drinksResults.slice(0, doze);
   return (
     <div>
       <Header />
@@ -14,8 +16,15 @@ function Drinks() {
             && <Redirect to={ `/drinks/${drinksResults[0].idDrink}` } />
         }
         {
-          drinksResults.map((drink) => (
-            <p key={ drink.idDrink }>{drink.strDrink}</p>
+          drinksMap.map((drink, index) => (
+            <div key={ drink.idDrink } data-testid={ `${index}-recipe-card` }>
+              <img
+                data-testid={ `${index}-card-img` }
+                src={ drink.strDrinkThumb }
+                alt={ drink.strDrink }
+              />
+              <p data-testid={ `${index}-card-name` }>{drink.strDrink}</p>
+            </div>
           ))
         }
       </div>
