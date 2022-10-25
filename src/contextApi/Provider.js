@@ -6,7 +6,6 @@ function Provider({ children }) {
   const [searchBtn, setSearchBtn] = useState(false);
 
   const showsearchBtn = useCallback(() => {
-    console.log('clicou');
     setSearchBtn(!searchBtn);
   }, [searchBtn]);
 

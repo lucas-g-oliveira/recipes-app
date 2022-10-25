@@ -6,9 +6,14 @@ import Meals from '../pages/Meals';
 
 describe('Testa o componente Header', () => {
   it('verifica se os ícones sao renderizados corretamente', () => {
-    renderWithRouter(<Meals />)
+    const { history } = renderWithRouter(<Meals />);
+    const { location: { pathname }} = history;
+    console.log(pathname);
+
+    expect(pathname).toBe('/meals');
+
     const profileIcon = screen.getByRole('img', {  name: /profile/i});
-    const searchIcon = screen.getByRole('img', {  name: /seacrh/i});
+    const searchIcon = screen.getByTestId('search-top-btn');
     const pageName = screen.getByTestId('page-title');
     
     expect(profileIcon).toBeInTheDocument();

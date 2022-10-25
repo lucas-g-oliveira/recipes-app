@@ -11,20 +11,7 @@ function Header() {
   const history = useHistory();
   const { location: { pathname } } = history;
 
-  const getPageTitle = () => {
-    const title = pathname.replace('/', '').replace('-', ' ').split(' ');
-    let pageTitle = '';
-    if (title.length > 1) {
-      const fisrString = title[0][0].toUpperCase() + title[0].substring(1);
-      const secondString = title[1][0].toUpperCase() + title[1].substring(1);
-      pageTitle = `${fisrString} ${secondString} `;
-    } else {
-      pageTitle = title[0][0].toUpperCase() + title[0].substring(1);
-    }
-    return pageTitle;
-  };
-
-  const pageTitle = getPageTitle();
+  const pageTitle = pathname.replace('/', '').replace('-', ' ').split(' ');
 
   return (
     <header>
@@ -42,7 +29,11 @@ function Header() {
         searchBtn && <SearchBar />
       }
 
-      <h2 data-testid="page-title">{ pageTitle }</h2>
+      <h2 data-testid="page-title">
+        {
+          pageTitle.map((str) => (`${str[0].toUpperCase() + str.substring(1)} `))
+        }
+      </h2>
     </header>
   );
 }

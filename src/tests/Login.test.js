@@ -1,7 +1,8 @@
 import React from 'react';
-import renderWithRouter, { screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
+import renderWithRouter from '../helpers/renderWithRouter';
 
 describe('Testa a página de Login', () => {
   it('Verifica se O formulário só fica válido após um email válido e uma senha de mais de 6 caracteres', () => {
