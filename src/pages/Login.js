@@ -1,61 +1,81 @@
-import React, { useState, useEffect } from 'react';
+import proptypes from 'prop-types';
+import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { saveEmail } from '../Services/userStorage';
 
-export default function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [isDisable, setIsDisable] = useState(true);
-  const [next, setNext] = useState(false);
-
-  useEffect(() => {
-    const regex = /\S+@\S+\.\S+/;
-    const minimo = 7;
-    const verifyEmail = regex.test(email);
-    if (password.length >= minimo && verifyEmail) {
-      setIsDisable(false);
-    } else {
-      setIsDisable(true);
-    }
-  }, [email, password]);
-
-  const handleClick = () => {
-    saveEmail(email);
-    setNext(true);
+class Login extends React.Component {
+  state = {
+    email: '',
+    password: '',
+    validarB: true,
+    next: false,
   };
 
-  return (
-    next ? <Redirect
-      to="/meals"
-    /> : (
-      <>
-        <h1>Login</h1>
-        Email :
-        <input
-          name="email"
-          type="text"
-          data-testid="email-input"
-          value={ email }
-          onChange={ (evento) => setEmail(evento.target.value) }
-        />
-        senha :
-        <input
-          name="password"
-          type="password"
-          data-testid="password-input"
-          value={ password }
-          onChange={ (evento) => setPassword(evento.target.value) }
-        />
-        <button
-          type="button"
-          value="Enter"
-          data-testid="login-submit-btn"
-          disabled={ isDisable }
-          onClick={ handleClick }
-        >
-          Enter
-        </button>
-      </>
-    )
-  );
+  handleChange = ({ target }) => {
+    const { name, value } = target;
+    const minimo = 7;
+    this.setState({
+      [name]: value,
+    }, () => {
+      const { password, email } = this.state;
+      const regex = /\S+@\S+\.\S+/;
+      const verifyEmail = regex.test(email);
+      if (password.length >= minimo && verifyEmail) {
+        this.setState({
+          validarB: false,
+        });
+      } else {
+        this.setState({
+          validarB: true,
+        });
+      }
+    });
+  };
+
+  handleClick = () => {
+    const { email } = this.state;
+    saveEmail(email);
+    this.setState({
+      next: true,
+    });
+  };
+
+  render() {
+    const { email, password, validarB, next } = this.state;
+    return (
+      next ? <Redirect
+        to={ { pathname: '/meals' } }
+      /> : (
+        <>
+          <h1>Login</h1>
+          Email :
+          <input
+            name="email"
+            type="text"
+            data-testid="email-input"
+            value={ email }
+            onChange={ this.handleChange }
+          />
+          senha :
+          <input
+            name="password"
+            type="password"
+            data-testid="password-input"
+            value={ password }
+            onChange={ this.handleChange }
+          />
+          <button
+            type="button"
+            value="Enter"
+            data-testid="login-submit-btn"
+            disabled={ validarB }
+            onClick={ this.handleClick }
+          >
+            Enter
+          </button>
+        </>
+      )
+    );
+  }
 }
+
