@@ -4,8 +4,6 @@ import AppContext from '../contextApi/AppContext';
 
 function SearchBar() {
   const { handleSearchChange, handleClickApi } = useContext(AppContext);
-  // const history = useHistory();
-  // const { location: { pathname } } = history;
   const { location: { pathname } } = useHistory();
   return (
     <div>

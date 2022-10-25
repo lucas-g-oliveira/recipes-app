@@ -8,6 +8,8 @@ function Provider({ children }) {
     valueToSearch: '',
     option: '',
   });
+  const [mealsResults, setMealsResults] = useState([]);
+  const [drinksResults, setDrinksResults] = useState([]);
 
   const showsearchBtn = useCallback(() => {
     setSearchBtn(!searchBtn);
@@ -15,11 +17,7 @@ function Provider({ children }) {
 
   const handleSearchChange = useCallback(({ target }) => {
     const { name, value } = target;
-    // const { valueToSearch, option } = searchByType;
     setSearchByType({ ...searchByType, [name]: value });
-    // if (option === 'primeiraLetra' && valueToSearch.length > 1) {
-    //   global.alert('Your search must have only 1 (one) character');
-    // }
   }, [searchByType]);
 
   const fetchMealsApi = useCallback(async () => {
@@ -37,7 +35,7 @@ function Provider({ children }) {
       response = await fetch(firstLetterEndpoint);
     }
     const data = await response.json();
-    console.log(data);
+    setMealsResults(data.meals);
   }, [searchByType]);
 
   const fetchDrinksApi = useCallback(async () => {
@@ -55,7 +53,7 @@ function Provider({ children }) {
       response = await fetch(firstLetterEndpoint);
     }
     const data = await response.json();
-    console.log(data);
+    setDrinksResults(data.drinks);
   }, [searchByType]);
 
   const handleClickApi = useCallback((pathname) => {
@@ -72,9 +70,18 @@ function Provider({ children }) {
   const context = useMemo(() => ({
     searchBtn,
     showsearchBtn,
+    mealsResults,
+    drinksResults,
     handleSearchChange,
     handleClickApi,
-  }), [searchBtn, showsearchBtn, handleSearchChange, handleClickApi]);
+  }), [
+    searchBtn,
+    showsearchBtn,
+    mealsResults,
+    drinksResults,
+    handleSearchChange,
+    handleClickApi,
+  ]);
 
   return (
     <AppContext.Provider value={ context }>
