@@ -5,7 +5,7 @@ import { act } from 'react-dom/test-utils';
 import renderWithRouter from '../helpers/renderWithRouter';
 import App from '../App';
 
-describe('Testa o componente Footer', () => {
+describe('Testa o componente Header', () => {
   it('verifica se os ícones sao renderizados corretamente', () => {
     const { history } = renderWithRouter(<App />);
 
@@ -15,19 +15,26 @@ describe('Testa o componente Footer', () => {
 
     userEvent.type(email, 'test@test.com');
     userEvent.type(password, '1234567');
+
+    expect(btnSubmit).toBeEnabled();
     userEvent.click(btnSubmit);
 
-    act(() => { history.push('/meals'); });
-    const { location: { pathname } } = history;
+    act(() => history.push('/meals'));
 
-    expect(pathname).toBe('/meals');
+    const searchIcon = screen.getByTestId('search-top-btn');
 
-    const drinkIcon = screen.getByTestId('drinks-bottom-btn');
-    const mealIcon = screen.getByTestId('meals-bottom-btn');
-    const footer = screen.getByTestId('footer');
+    expect(searchIcon).toBeInTheDocument();
 
-    expect(footer).toBeInTheDocument();
-    expect(drinkIcon).toBeInTheDocument();
-    expect(mealIcon).toBeInTheDocument();
+    userEvent.click(searchIcon);
+
+    const searchBar = screen.getByTestId('search-input');
+    const ingredientOption = screen.getByTestId('ingredient-search-radio');
+    const btnSearch = screen.getByTestId('exec-search-btn');
+
+    expect(searchBar).toBeInTheDocument();
+
+    userEvent.type(searchBar, 'bread');
+    userEvent.tab(ingredientOption);
+    userEvent.click(btnSearch);
   });
 });
