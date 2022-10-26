@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import AppContext from '../contextApi/AppContext';
 import Footer from './Footer';
 
@@ -16,7 +16,7 @@ function Recipes() {
   const doze = 12;
   const { location: { pathname } } = useHistory();
   const resultsMap = results.slice(0, doze);
-  console.log(categories);
+  console.log(resultsMap);
 
   useEffect(() => {
     const fetchTudo = async () => {
@@ -59,11 +59,17 @@ function Recipes() {
               key={ result.idMeal ? result.idMeal : result.idDrink }
               data-testid={ `${index}-recipe-card` }
             >
-              <img
-                data-testid={ `${index}-card-img` }
-                src={ result.strMealThumb ? result.strMealThumb : result.strDrinkThumb }
-                alt={ result.strMeal ? result.strMeal : result.strDrink }
-              />
+              <Link
+                to={ result.idMeal
+                  ? (`${pathname}/${result.idMeal}`)
+                  : (`${pathname}/${result.idDrink}`) }
+              >
+                <img
+                  data-testid={ `${index}-card-img` }
+                  src={ result.strMealThumb ? result.strMealThumb : result.strDrinkThumb }
+                  alt={ result.strMeal ? result.strMeal : result.strDrink }
+                />
+              </Link>
               <p
                 data-testid={ `${index}-card-name` }
               >
