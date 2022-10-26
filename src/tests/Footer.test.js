@@ -1,6 +1,7 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { act } from 'react-dom/test-utils';
 import renderWithRouter from '../helpers/renderWithRouter';
 import App from '../App';
 
@@ -24,9 +25,7 @@ describe('Testa o componente Footer', () => {
     const drinkIcon = screen.getByTestId('drinks-bottom-btn');
     const mealIcon = screen.getByTestId('meals-bottom-btn');
     const footer = screen.getByTestId('footer');
-    const tagFooter = screen.getByRole('footer');
 
-    expect(tagFooter).toBeInTheDocument();
     expect(footer).toBeInTheDocument();
     expect(drinkIcon).toBeInTheDocument();
     expect(mealIcon).toBeInTheDocument();

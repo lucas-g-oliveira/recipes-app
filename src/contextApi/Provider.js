@@ -35,7 +35,12 @@ function Provider({ children }) {
       response = await fetch(firstLetterEndpoint);
     }
     const data = await response.json();
-    setMealsResults(data.meals);
+
+    if (data.meals === null) {
+      global.alert('Sorry, we haven\'t found any recipes for these filters.');
+    } else {
+      setMealsResults(data.meals);
+    }
   }, [searchByType]);
 
   const fetchDrinksApi = useCallback(async () => {
@@ -53,7 +58,12 @@ function Provider({ children }) {
       response = await fetch(firstLetterEndpoint);
     }
     const data = await response.json();
-    setDrinksResults(data.drinks);
+
+    if (data.drinks === null) {
+      global.alert('Sorry, we haven\'t found any recipes for these filters.');
+    } else {
+      setDrinksResults(data.drinks);
+    }
   }, [searchByType]);
 
   const handleClickApi = useCallback((pathname) => {

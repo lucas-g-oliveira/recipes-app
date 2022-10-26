@@ -8,6 +8,7 @@ function Drinks() {
   const { drinksResults } = useContext(AppContext);
   const doze = 12;
   const drinksMap = drinksResults.slice(0, doze);
+
   return (
     <div>
       <Header />

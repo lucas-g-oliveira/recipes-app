@@ -8,6 +8,7 @@ function Meals() {
   const { mealsResults } = useContext(AppContext);
   const doze = 12;
   const mealsMap = mealsResults.slice(0, doze);
+
   return (
     <div>
       <Header />
