@@ -3,46 +3,31 @@ import { useHistory } from 'react-router-dom';
 import AppContext from '../contextApi/AppContext';
 import Footer from './Footer';
 
-function Recipes() {
-  const {
-    results,
-    fetchMealsApi,
-    fetchDrinksApi,
-    categories,
-  } = useContext(AppContext);
-  const doze = 12;
+function RecipesDetails() {
+  const { selectedRecipe } = useContext(AppContext);
   const { location: { pathname } } = useHistory();
-  const resultsMap = results.slice(0, doze);
-  console.log(categories);
+
+  // handleClick --> target --> trazer id --> vamos colocar esse id na url --> fetch com url
+/*   const [selectedRecipe, setSelectedRecipe] = useState('')
+  handleClick({target}){
+        setSelectedRecipe(target);
+    }
+  }; */
 
   useEffect(() => {
-    const fetchTudo = async () => {
-      if (pathname === '/meals') {
-        fetchMealsApi();
+    const fetchDetail = async () => {
+      if (selectedRecipe.key ==) {
+        
       } else {
-        fetchDrinksApi();
+        
       }
     };
     fetchTudo();
-  }, [pathname, fetchMealsApi, fetchDrinksApi]);
-
-  // useEffect(() => {
-  //   fetchCategory();
-  // }, []);
+  });
 
   return (
     <div>
       <div>
-        {
-          categories.map((a) => (
-            <input
-              key={ a.strCategory }
-              type="button"
-              value={ a.strCategory }
-              data-testid={ `${a.strCategory}-category-filter` }
-            />
-          ))
-        }
         {
           resultsMap.map((result, index) => (
             <div

@@ -11,6 +11,8 @@ function Provider({ children }) {
   const [mealsResults, setMealsResults] = useState([]);
   const [drinksResults, setDrinksResults] = useState([]);
   const [results, setResults] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [idRecipe, setIdRecipe] = useState('');
 
   const showsearchBtn = useCallback(() => {
     setSearchBtn(!searchBtn);
@@ -20,6 +22,24 @@ function Provider({ children }) {
     const { name, value } = target;
     setSearchByType({ ...searchByType, [name]: value });
   }, [searchByType]);
+
+  const fetchCategory = useCallback(async (pathname) => {
+    let endpoint;
+    let key;
+    if (pathname === 'meals') {
+      endpoint = 'https://www.themealdb.com/api/json/v1/1/list.php?c=list';
+      key = 'meals';
+    } else {
+      endpoint = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list';
+      key = 'drinks';
+    }
+    const response = await fetch(endpoint);
+    const data = await response.json();
+    const cinco = 5;
+    const resultsCategories = data[key].slice(0, cinco);
+    // console.log(resultsCategories);
+    setCategories(resultsCategories);
+  }, []);
 
   const fetchMealsApi = useCallback(async () => {
     const { valueToSearch, option } = searchByType;
@@ -46,7 +66,8 @@ function Provider({ children }) {
       setMealsResults(data.meals);
       setResults(data.meals);
     }
-  }, [searchByType]);
+    fetchCategory('meals');
+  }, [searchByType, fetchCategory]);
 
   const fetchDrinksApi = useCallback(async () => {
     const { valueToSearch, option } = searchByType;
@@ -73,7 +94,8 @@ function Provider({ children }) {
       setDrinksResults(data.drinks);
       setResults(data.drinks);
     }
-  }, [searchByType]);
+    fetchCategory('drinks');
+  }, [searchByType, fetchCategory]);
 
   const handleClickApi = useCallback((pathname) => {
     const { valueToSearch, option } = searchByType;
@@ -97,6 +119,10 @@ function Provider({ children }) {
     results,
     fetchDrinksApi,
     fetchMealsApi,
+    idRecipe,
+    setIdRecipe,
+    fetchCategory,
+    categories,
   }), [
     searchBtn,
     showsearchBtn,
@@ -108,6 +134,10 @@ function Provider({ children }) {
     results,
     fetchDrinksApi,
     fetchMealsApi,
+    idRecipe,
+    setIdRecipe,
+    fetchCategory,
+    categories,
   ]);
 
   return (
