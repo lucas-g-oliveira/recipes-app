@@ -9,6 +9,8 @@ function Recipes() {
     fetchMealsApi,
     fetchDrinksApi,
     categories,
+    setFilterByCategory,
+    resetFilter,
   } = useContext(AppContext);
   const doze = 12;
   const { location: { pathname } } = useHistory();
@@ -40,9 +42,16 @@ function Recipes() {
               type="button"
               value={ a.strCategory }
               data-testid={ `${a.strCategory}-category-filter` }
+              onClick={ () => setFilterByCategory(pathname, a.strCategory) }
             />
           ))
         }
+        <input
+          value="All"
+          type="button"
+          onClick={ () => resetFilter(pathname) }
+          data-testid="All-category-filter"
+        />
         {
           resultsMap.map((result, index) => (
             <div

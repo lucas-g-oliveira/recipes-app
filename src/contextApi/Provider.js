@@ -108,6 +108,30 @@ function Provider({ children }) {
     }
   }, [fetchMealsApi, fetchDrinksApi, searchByType]);
 
+  const setFilterByCategory = useCallback(async (pathname, categorie) => {
+    let endpoint;
+    let key;
+    if (pathname === '/meals') {
+      endpoint = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${categorie}`;
+      key = 'meals';
+    } else {
+      endpoint = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${categorie}`;
+      key = 'drinks';
+    }
+
+    const response = await fetch(endpoint);
+    const data = await response.json();
+    setResults(data[key]);
+  }, []);
+
+  const resetFilter = useCallback((pathname) => {
+    if (pathname === '/meals') {
+      setResults(mealsResults);
+    } else {
+      setResults(drinksResults);
+    }
+  }, [mealsResults, drinksResults]);
+
   const context = useMemo(() => ({
     searchBtn,
     showsearchBtn,
@@ -123,6 +147,8 @@ function Provider({ children }) {
     setIdRecipe,
     fetchCategory,
     categories,
+    setFilterByCategory,
+    resetFilter,
   }), [
     searchBtn,
     showsearchBtn,
@@ -138,6 +164,8 @@ function Provider({ children }) {
     setIdRecipe,
     fetchCategory,
     categories,
+    setFilterByCategory,
+    resetFilter,
   ]);
 
   return (
