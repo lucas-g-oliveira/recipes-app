@@ -11,6 +11,7 @@ function Provider({ children }) {
   const [mealsResults, setMealsResults] = useState([]);
   const [drinksResults, setDrinksResults] = useState([]);
   const [results, setResults] = useState([]);
+  const [selectedRecipe, setSelectedRecipe] = useState('');
 
   const showsearchBtn = useCallback(() => {
     setSearchBtn(!searchBtn);
@@ -97,6 +98,8 @@ function Provider({ children }) {
     results,
     fetchDrinksApi,
     fetchMealsApi,
+    selectedRecipe,
+    setSelectedRecipe,
   }), [
     searchBtn,
     showsearchBtn,
@@ -108,6 +111,8 @@ function Provider({ children }) {
     results,
     fetchDrinksApi,
     fetchMealsApi,
+    selectedRecipe,
+    setSelectedRecipe,
   ]);
 
   return (

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 // import { Redirect } from 'react-router-dom';
 // import Header from './Header';
 import AppContext from '../contextApi/AppContext';
@@ -28,21 +28,25 @@ function Recipes() {
       <div>
         {
           resultsMap.map((result, index) => (
-            <div
+            <Link
+              to={ `${pathname}/${result.idMeal ? result.idMeal : result.idDrink}` }
               key={ result.idMeal ? result.idMeal : result.idDrink }
-              data-testid={ `${index}-recipe-card` }
             >
-              <img
-                data-testid={ `${index}-card-img` }
-                src={ result.strMealThumb ? result.strMealThumb : result.strDrinkThumb }
-                alt={ result.strMeal ? result.strMeal : result.strDrink }
-              />
-              <p
-                data-testid={ `${index}-card-name` }
+              <div
+                data-testid={ `${index}-recipe-card` }
               >
-                { result.strMeal ? result.strMeal : result.strDrink }
-              </p>
-            </div>
+                <img
+                  data-testid={ `${index}-card-img` }
+                  src={ result.strMealThumb ? result.strMealThumb : result.strDrinkThumb }
+                  alt={ result.strMeal ? result.strMeal : result.strDrink }
+                />
+                <p
+                  data-testid={ `${index}-card-name` }
+                >
+                  { result.strMeal ? result.strMeal : result.strDrink }
+                </p>
+              </div>
+            </Link>
           ))
         }
       </div>
