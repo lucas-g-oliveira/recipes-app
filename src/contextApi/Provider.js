@@ -10,6 +10,7 @@ function Provider({ children }) {
   });
   const [mealsResults, setMealsResults] = useState([]);
   const [drinksResults, setDrinksResults] = useState([]);
+  const [results, setResults] = useState([]);
 
   const showsearchBtn = useCallback(() => {
     setSearchBtn(!searchBtn);
@@ -25,14 +26,17 @@ function Provider({ children }) {
     const ingredientEndpoint = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${valueToSearch}`;
     const nameEndpoint = `https://www.themealdb.com/api/json/v1/1/search.php?s=${valueToSearch}`;
     const firstLetterEndpoint = `https://www.themealdb.com/api/json/v1/1/search.php?f=${valueToSearch}`;
+    const generalFechEndpoint = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
 
     let response;
     if (option === 'ingredientes') {
       response = await fetch(ingredientEndpoint);
     } else if (option === 'name') {
       response = await fetch(nameEndpoint);
-    } else {
+    } else if (option === 'primeiraLetra') {
       response = await fetch(firstLetterEndpoint);
+    } else {
+      response = await fetch(generalFechEndpoint);
     }
     const data = await response.json();
 
@@ -40,6 +44,7 @@ function Provider({ children }) {
       global.alert('Sorry, we haven\'t found any recipes for these filters.');
     } else {
       setMealsResults(data.meals);
+      setResults(data.meals);
     }
   }, [searchByType]);
 
@@ -48,14 +53,17 @@ function Provider({ children }) {
     const ingredientEndpoint = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${valueToSearch}`;
     const nameEndpoint = `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${valueToSearch}`;
     const firstLetterEndpoint = `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${valueToSearch}`;
+    const generalFechEndpoint = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
 
     let response;
     if (option === 'ingredientes') {
       response = await fetch(ingredientEndpoint);
     } else if (option === 'name') {
       response = await fetch(nameEndpoint);
-    } else {
+    } else if (option === 'primeiraLetra') {
       response = await fetch(firstLetterEndpoint);
+    } else {
+      response = await fetch(generalFechEndpoint);
     }
     const data = await response.json();
 
@@ -63,6 +71,7 @@ function Provider({ children }) {
       global.alert('Sorry, we haven\'t found any recipes for these filters.');
     } else {
       setDrinksResults(data.drinks);
+      setResults(data.drinks);
     }
   }, [searchByType]);
 
@@ -84,6 +93,10 @@ function Provider({ children }) {
     drinksResults,
     handleSearchChange,
     handleClickApi,
+    setResults,
+    results,
+    fetchDrinksApi,
+    fetchMealsApi,
   }), [
     searchBtn,
     showsearchBtn,
@@ -91,6 +104,10 @@ function Provider({ children }) {
     drinksResults,
     handleSearchChange,
     handleClickApi,
+    setResults,
+    results,
+    fetchDrinksApi,
+    fetchMealsApi,
   ]);
 
   return (

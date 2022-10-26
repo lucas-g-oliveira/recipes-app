@@ -3,11 +3,10 @@ import { Redirect } from 'react-router-dom';
 import Header from '../components/Header';
 import AppContext from '../contextApi/AppContext';
 import Footer from '../components/Footer';
+import Recipes from '../components/Recepies';
 
 function Drinks() {
   const { drinksResults } = useContext(AppContext);
-  const doze = 12;
-  const drinksMap = drinksResults.slice(0, doze);
 
   return (
     <div>
@@ -17,7 +16,7 @@ function Drinks() {
           drinksResults.length === 1
             && <Redirect to={ `/drinks/${drinksResults[0].idDrink}` } />
         }
-        {
+        {/* {
           drinksMap.map((drink, index) => (
             <div key={ drink.idDrink } data-testid={ `${index}-recipe-card` }>
               <img
@@ -28,8 +27,9 @@ function Drinks() {
               <p data-testid={ `${index}-card-name` }>{drink.strDrink}</p>
             </div>
           ))
-        }
+        } */}
       </div>
+      <Recipes />
       <Footer />
     </div>
   );
