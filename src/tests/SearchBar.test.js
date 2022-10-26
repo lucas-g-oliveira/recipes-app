@@ -5,8 +5,8 @@ import { act } from 'react-dom/test-utils';
 import renderWithRouter from '../helpers/renderWithRouter';
 import App from '../App';
 
-describe('Testa o componente Header', () => {
-  it('verifica se os ícones sao renderizados corretamente', () => {
+describe('Testa o componente SearchBar', () => {
+  it('verifica se toda a rota do App até usar o SearchBar funciona', () => {
     const { history } = renderWithRouter(<App />);
 
     const email = screen.getByTestId('email-input');
