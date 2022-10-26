@@ -13,6 +13,7 @@ function Provider({ children }) {
   const [results, setResults] = useState([]);
   const [categories, setCategories] = useState([]);
   const [idRecipe, setIdRecipe] = useState('');
+  const [filterToggle, setFilterToggle] = useState(false);
 
   const showsearchBtn = useCallback(() => {
     setSearchBtn(!searchBtn);
@@ -132,6 +133,16 @@ function Provider({ children }) {
     }
   }, [mealsResults, drinksResults]);
 
+  const handleClickToggle = useCallback((pathname, categorie) => {
+    if (!filterToggle) {
+      setFilterByCategory(pathname, categorie);
+      setFilterToggle(!filterToggle);
+    } else {
+      resetFilter(pathname);
+      setFilterToggle(!filterToggle);
+    }
+  }, [filterToggle, setFilterToggle, resetFilter, setFilterByCategory]);
+
   const context = useMemo(() => ({
     searchBtn,
     showsearchBtn,
@@ -149,6 +160,7 @@ function Provider({ children }) {
     categories,
     setFilterByCategory,
     resetFilter,
+    handleClickToggle,
   }), [
     searchBtn,
     showsearchBtn,
@@ -166,6 +178,7 @@ function Provider({ children }) {
     categories,
     setFilterByCategory,
     resetFilter,
+    handleClickToggle,
   ]);
 
   return (

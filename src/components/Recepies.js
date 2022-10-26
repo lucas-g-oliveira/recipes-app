@@ -9,8 +9,9 @@ function Recipes() {
     fetchMealsApi,
     fetchDrinksApi,
     categories,
-    setFilterByCategory,
+    // setFilterByCategory,
     resetFilter,
+    handleClickToggle,
   } = useContext(AppContext);
   const doze = 12;
   const { location: { pathname } } = useHistory();
@@ -42,7 +43,7 @@ function Recipes() {
               type="button"
               value={ a.strCategory }
               data-testid={ `${a.strCategory}-category-filter` }
-              onClick={ () => setFilterByCategory(pathname, a.strCategory) }
+              onClick={ () => handleClickToggle(pathname, a.strCategory) }
             />
           ))
         }
