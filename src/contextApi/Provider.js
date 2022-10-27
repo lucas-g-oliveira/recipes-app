@@ -12,6 +12,10 @@ function Provider({ children }) {
   const [drinksResults, setDrinksResults] = useState([]);
   const [results, setResults] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [idRecipe, setIdRecipe] = useState('');
+  const [filterToggle, setFilterToggle] = useState(false);
+
   const showsearchBtn = useCallback(() => {
     setSearchBtn(!searchBtn);
   }, [searchBtn]);
@@ -20,6 +24,24 @@ function Provider({ children }) {
     const { name, value } = target;
     setSearchByType({ ...searchByType, [name]: value });
   }, [searchByType]);
+
+  const fetchCategory = useCallback(async (pathname) => {
+    let endpoint;
+    let key;
+    if (pathname === 'meals') {
+      endpoint = 'https://www.themealdb.com/api/json/v1/1/list.php?c=list';
+      key = 'meals';
+    } else {
+      endpoint = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list';
+      key = 'drinks';
+    }
+    const response = await fetch(endpoint);
+    const data = await response.json();
+    const cinco = 5;
+    const resultsCategories = data[key].slice(0, cinco);
+    // console.log(resultsCategories);
+    setCategories(resultsCategories);
+  }, []);
 
   const fetchMealsApi = useCallback(async () => {
     const { valueToSearch, option } = searchByType;
@@ -46,7 +68,8 @@ function Provider({ children }) {
       setMealsResults(data.meals);
       setResults(data.meals);
     }
-  }, [searchByType]);
+    fetchCategory('meals');
+  }, [searchByType, fetchCategory]);
 
   const fetchDrinksApi = useCallback(async () => {
     const { valueToSearch, option } = searchByType;
@@ -73,7 +96,8 @@ function Provider({ children }) {
       setDrinksResults(data.drinks);
       setResults(data.drinks);
     }
-  }, [searchByType]);
+    fetchCategory('drinks');
+  }, [searchByType, fetchCategory]);
 
   const handleClickApi = useCallback((pathname) => {
     const { valueToSearch, option } = searchByType;
@@ -85,6 +109,40 @@ function Provider({ children }) {
       fetchDrinksApi();
     }
   }, [fetchMealsApi, fetchDrinksApi, searchByType]);
+
+  const setFilterByCategory = useCallback(async (pathname, categorie) => {
+    let endpoint;
+    let key;
+    if (pathname === '/meals') {
+      endpoint = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${categorie}`;
+      key = 'meals';
+    } else {
+      endpoint = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${categorie}`;
+      key = 'drinks';
+    }
+
+    const response = await fetch(endpoint);
+    const data = await response.json();
+    setResults(data[key]);
+  }, []);
+
+  const resetFilter = useCallback((pathname) => {
+    if (pathname === '/meals') {
+      setResults(mealsResults);
+    } else {
+      setResults(drinksResults);
+    }
+  }, [mealsResults, drinksResults]);
+
+  const handleClickToggle = useCallback((pathname, categorie) => {
+    if (!filterToggle) {
+      setFilterByCategory(pathname, categorie);
+      setFilterToggle(!filterToggle);
+    } else {
+      resetFilter(pathname);
+      setFilterToggle(!filterToggle);
+    }
+  }, [filterToggle, setFilterToggle, resetFilter, setFilterByCategory]);
 
   const context = useMemo(() => ({
     searchBtn,
@@ -99,6 +157,13 @@ function Provider({ children }) {
     fetchMealsApi,
     selectedRecipe,
     setSelectedRecipe,
+    idRecipe,
+    setIdRecipe,
+    fetchCategory,
+    categories,
+    setFilterByCategory,
+    resetFilter,
+    handleClickToggle,
   }), [
     searchBtn,
     showsearchBtn,
@@ -112,6 +177,13 @@ function Provider({ children }) {
     fetchMealsApi,
     selectedRecipe,
     setSelectedRecipe,
+    idRecipe,
+    setIdRecipe,
+    fetchCategory,
+    categories,
+    setFilterByCategory,
+    resetFilter,
+    handleClickToggle,
   ]);
 
   return (
