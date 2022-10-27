@@ -164,6 +164,8 @@ function Provider({ children }) {
     setFilterByCategory,
     resetFilter,
     handleClickToggle,
+    setMealsResults,
+    setDrinksResults,
   }), [
     searchBtn,
     showsearchBtn,
@@ -184,6 +186,8 @@ function Provider({ children }) {
     setFilterByCategory,
     resetFilter,
     handleClickToggle,
+    setMealsResults,
+    setDrinksResults,
   ]);
 
   return (
