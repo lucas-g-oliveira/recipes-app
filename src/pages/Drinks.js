@@ -16,18 +16,6 @@ function Drinks() {
           drinksResults.length === 1
             && <Redirect to={ `/drinks/${drinksResults[0].idDrink}` } />
         }
-        {/* {
-          drinksMap.map((drink, index) => (
-            <div key={ drink.idDrink } data-testid={ `${index}-recipe-card` }>
-              <img
-                data-testid={ `${index}-card-img` }
-                src={ drink.strDrinkThumb }
-                alt={ drink.strDrink }
-              />
-              <p data-testid={ `${index}-card-name` }>{drink.strDrink}</p>
-            </div>
-          ))
-        } */}
       </div>
       <Recipes />
       <Footer />
