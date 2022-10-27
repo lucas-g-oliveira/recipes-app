@@ -11,6 +11,7 @@ function Provider({ children }) {
   const [mealsResults, setMealsResults] = useState([]);
   const [drinksResults, setDrinksResults] = useState([]);
   const [results, setResults] = useState([]);
+  const [selectedRecipe, setSelectedRecipe] = useState([]);
   const [categories, setCategories] = useState([]);
   const [idRecipe, setIdRecipe] = useState('');
   const [filterToggle, setFilterToggle] = useState(false);
@@ -154,6 +155,8 @@ function Provider({ children }) {
     results,
     fetchDrinksApi,
     fetchMealsApi,
+    selectedRecipe,
+    setSelectedRecipe,
     idRecipe,
     setIdRecipe,
     fetchCategory,
@@ -172,6 +175,8 @@ function Provider({ children }) {
     results,
     fetchDrinksApi,
     fetchMealsApi,
+    selectedRecipe,
+    setSelectedRecipe,
     idRecipe,
     setIdRecipe,
     fetchCategory,

@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import Header from '../components/Header';
 import AppContext from '../contextApi/AppContext';
 import Footer from '../components/Footer';
-import Recipes from '../components/Recepies';
+import Recipes from '../components/Recipes';
 
 function Drinks() {
   const { drinksResults } = useContext(AppContext);

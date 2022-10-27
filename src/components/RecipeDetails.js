@@ -1,56 +1,44 @@
-// import React, { useContext, useEffect } from 'react';
-// import { useHistory } from 'react-router-dom';
-// import AppContext from '../contextApi/AppContext';
-// import Footer from './Footer';
+import React, { useContext, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+import AppContext from '../contextApi/AppContext';
+import Footer from './Footer';
 
-// // function RecipesDetails() {
-// //   const { selectedRecipe } = useContext(AppContext);
-// //   const { location: { pathname } } = useHistory();
+function RecipesDetails() {
+  const { location: { pathname } } = useHistory();
+  const { setSelectedRecipe, selectedRecipe } = useContext(AppContext);
+  console.log(selectedRecipe);
+  // handleClick --> target --> trazer id --> vamos colocar esse id na url --> fetch com url
+  /* setSelectedRecipe(pathname); */
+  const way = pathname.replace('/meals/', '');
+  const wayDrink = pathname.replace('/drinks/', '');
 
-//   // handleClick --> target --> trazer id --> vamos colocar esse id na url --> fetch com url
-// /*   const [selectedRecipe, setSelectedRecipe] = useState('')
-//   handleClick({target}){
-//         setSelectedRecipe(target);
-//     }
-//   }; */
+  useEffect(() => {
+    const fetchDetail = async () => {
+      const detailsMealsEndPoint = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${way}`;
+      const detailsDrinksEndPoint = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${wayDrink}`;
+      let response;
+      let key;
+      console.log(pathname);
+      if (pathname === `/meals/${way}`) {
+        response = await fetch(detailsMealsEndPoint);
+        key = 'meals';
+      } else {
+        response = await fetch(detailsDrinksEndPoint);
+        key = 'drinks';
+      }
+      const data = await response.json();
+      setSelectedRecipe(data[key]);
+    };
+    fetchDetail();
+  }, [pathname, setSelectedRecipe, way, wayDrink]);
 
-//   // useEffect(() => {
-//   //   const fetchDetail = async () => {
-//   //     if (selectedRecipe.key ==) {
-
-//   //     } else {
-
-//   //     }
-//   //   };
-//   //   fetchTudo();
-//   // });
-
-//   return (
-//     <div>
-//       <div>
-//         {
-//           resultsMap.map((result, index) => (
-//             <div
-//               key={ result.idMeal ? result.idMeal : result.idDrink }
-//               data-testid={ `${index}-recipe-card` }
-//             >
-//               <img
-//                 data-testid={ `${index}-card-img` }
-//                 src={ result.strMealThumb ? result.strMealThumb : result.strDrinkThumb }
-//                 alt={ result.strMeal ? result.strMeal : result.strDrink }
-//               />
-//               <p
-//                 data-testid={ `${index}-card-name` }
-//               >
-//                 { result.strMeal ? result.strMeal : result.strDrink }
-//               </p>
-//             </div>
-//           ))
-//         }
-//       </div>
-//       <Footer />
-//     </div>
-//   );
-// }
-
-// export default Recipes;
+  return (
+    <div>
+      <div>
+        <p>Recipes Details</p>
+      </div>
+      <Footer />
+    </div>
+  );
+}
+export default RecipesDetails;
