@@ -11,8 +11,7 @@ function Provider({ children }) {
   const [mealsResults, setMealsResults] = useState([]);
   const [drinksResults, setDrinksResults] = useState([]);
   const [results, setResults] = useState([]);
-  const [selectedRecipe, setSelectedRecipe] = useState('');
-
+  const [selectedRecipe, setSelectedRecipe] = useState([]);
   const showsearchBtn = useCallback(() => {
     setSearchBtn(!searchBtn);
   }, [searchBtn]);

@@ -4,22 +4,50 @@ import AppContext from '../contextApi/AppContext';
 import Footer from './Footer';
 
 function RecipesDetails() {
-  const { selectedRecipe, setSelectedRecipe } = useContext(AppContext);
   const { location: { pathname } } = useHistory();
-  console.log(pathname);
+  const { setSelectedRecipe, selectedRecipe } = useContext(AppContext);
+  console.log(selectedRecipe);
   // handleClick --> target --> trazer id --> vamos colocar esse id na url --> fetch com url
   /* setSelectedRecipe(pathname); */
   const way = pathname.replace('/meals/', '');
+  const wayDrink = pathname.replace('/drinks/', '');
 
   useEffect(() => {
     const fetchDetail = async () => {
-      const detailsEndPoint = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${way}`;
-      const response = await fetch(detailsEndPoint);
+      const detailsMealsEndPoint = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${way}`;
+      const detailsDrinksEndPoint = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${wayDrink}`;
+      let response;
+      let key;
+      console.log(pathname);
+      if (pathname === `/meals/${way}`) {
+        response = await fetch(detailsMealsEndPoint);
+        key = 'meals';
+      } else {
+        response = await fetch(detailsDrinksEndPoint);
+        key = 'drinks';
+      }
       const data = await response.json();
-      console.log(data);
+      setSelectedRecipe(data[key]);
     };
     fetchDetail();
-  }, []);
+  }, [pathname, setSelectedRecipe, way, wayDrink]);
+
+  // const setFilterByCategory = useCallback(async (pathname, categorie) => {
+  //   let endpoint;
+  //   let key;
+  //   if (pathname === '/meals') {
+  //     endpoint = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${categorie}`;
+  //     key = 'meals';
+  //   } else {
+  //     endpoint = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${categorie}`;
+  //     key = 'drinks';
+  //   }
+
+  //   const response = await fetch(endpoint);
+  //   const data = await response.json();
+  //   setResults(data[key]);
+  // }, []);
+
   return (
     <div>
       <div>
