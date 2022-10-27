@@ -32,22 +32,6 @@ function RecipesDetails() {
     fetchDetail();
   }, [pathname, setSelectedRecipe, way, wayDrink]);
 
-  // const setFilterByCategory = useCallback(async (pathname, categorie) => {
-  //   let endpoint;
-  //   let key;
-  //   if (pathname === '/meals') {
-  //     endpoint = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${categorie}`;
-  //     key = 'meals';
-  //   } else {
-  //     endpoint = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${categorie}`;
-  //     key = 'drinks';
-  //   }
-
-  //   const response = await fetch(endpoint);
-  //   const data = await response.json();
-  //   setResults(data[key]);
-  // }, []);
-
   return (
     <div>
       <div>
