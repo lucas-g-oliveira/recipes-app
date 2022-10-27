@@ -50,8 +50,7 @@ function Recipes() {
       const response = await fetch(generalFechEndpoint);
       const data = await response.json();
       setResults(data[key]);
-      fetchCategory(key);
-
+      fetchCategory(key);// nada
       if (key === 'meals') {
         setMealsResults(data[key]);
       } else {
