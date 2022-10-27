@@ -4,8 +4,8 @@ import { createMemoryHistory } from 'history';
 import { render } from '@testing-library/react';
 import Provider from '../contextApi/Provider';
 
-const renderWithRouter = (component) => {
-  const history = createMemoryHistory();
+const renderWithRouter = (component, historyEntries = ['/']) => {
+  const history = createMemoryHistory({ initialEntries: historyEntries });
   return ({
     ...render(
       <Router history={ history }>

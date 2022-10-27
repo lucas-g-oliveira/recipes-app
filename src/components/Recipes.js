@@ -5,10 +5,7 @@ import AppContext from '../contextApi/AppContext';
 function Recipes() {
   const {
     results,
-    // fetchMealsApi,
-    // fetchDrinksApi,
     categories,
-    // setFilterByCategory,
     resetFilter,
     setResults,
     handleClickToggle,
@@ -19,22 +16,6 @@ function Recipes() {
   const doze = 12;
   const { location: { pathname } } = useHistory();
   const resultsMap = results.slice(0, doze);
-  console.log(resultsMap);
-
-  /*   useEffect(() => {
-    const fetchTudo = async () => {
-      if (pathname === '/meals') {
-        fetchMealsApi();
-      } else {
-        fetchDrinksApi();
-      }
-    };
-    fetchTudo();
-  }, [pathname, fetchMealsApi, fetchDrinksApi]); */
-
-  // useEffect(() => {
-  //   fetchCategory();
-  // }, []);
 
   useEffect(() => {
     const fetchTudo = async () => {
@@ -50,7 +31,7 @@ function Recipes() {
       const response = await fetch(generalFechEndpoint);
       const data = await response.json();
       setResults(data[key]);
-      fetchCategory(key);// nada
+      fetchCategory(key);
       if (key === 'meals') {
         setMealsResults(data[key]);
       } else {
