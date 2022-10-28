@@ -12,6 +12,6 @@ const saveDoneRecipe = () => {
   }));
 };
 
-export const getDoneRecipes = () => JSON.parse(localStorage.getItem('doneRecepies'))
+export const getDoneRecipes = () => JSON.parse(localStorage.getItem('doneRecepies'));
 
-export default {saveDoneRecipe, getDoneRecipes };
+export default { saveDoneRecipe, getDoneRecipes };
