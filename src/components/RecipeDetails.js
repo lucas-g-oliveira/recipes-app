@@ -12,33 +12,23 @@ function RecipesDetails() {
     selectedRecipe,
     setSuggestions,
     suggestions,
-    setStartedRecipe } = useContext(AppContext);
+    setStartedRecipe,
+    getRecipeIngredients,
+    ingredients,
+    getRecipeIngredientsMeasures,
+    measures } = useContext(AppContext);
 
   const seis = 6;
   const sixSuggestions = suggestions.slice(0, seis);
-  console.log(selectedRecipe);
-  if (selectedRecipe.length > 1) {
-    const recipeKeys = Object.entries(selectedRecipe[0]);
-    //   .filter((element) => (
-    //     element[0].includes('strIngredient')
-    //   ));
-    // console.log(recipeKeys);
-    const ingredients = recipeKeys.filter((element) => (
-      element[0].includes('strIngredient')
-    ));
-    console.log(ingredients);
-  }
-  // const ingredients = recipeKeys
-  //   .filter((element) => element[0].includes('strIngredient'));
-  // console.log(ingredients);
 
-  /* setSelectedRecipe(pathname); */
   const idOfMeal = pathname.replace('/meals/', '');
   const idOfDrink = pathname.replace('/drinks/', '');
 
   /*   useEffect(() => {
     saveDoneRecipe();
   }, []); */
+
+  const getyoutubeParam = 32;
 
   useEffect(() => {
     const fetchDetail = async () => {
@@ -55,9 +45,16 @@ function RecipesDetails() {
       }
       const data = await response.json();
       setSelectedRecipe(data[key]);
+      getRecipeIngredients(data[key]);
+      getRecipeIngredientsMeasures(data[key]);
     };
     fetchDetail();
-  }, [pathname, setSelectedRecipe, idOfMeal, idOfDrink]);
+  }, [pathname,
+    setSelectedRecipe,
+    idOfMeal,
+    idOfDrink,
+    getRecipeIngredients,
+    getRecipeIngredientsMeasures]);
 
   useEffect(() => {
     const fetchSuggestion = async () => {
@@ -97,9 +94,54 @@ function RecipesDetails() {
                 data-testid="recipe-photo"
                 width="300px"
               />
-              <p data-testid="recipe-category">{ recipe.strCategory }</p>
+              <p data-testid="recipe-category">
+                {
+                  recipe.strAlcoholic
+                    ? `${recipe.strCategory} ${recipe.strAlcoholic}`
+                    : recipe.strCategory
+                }
+              </p>
             </div>
           ))
+        }
+
+        <h3>Ingredients:</h3>
+        {
+          ingredients.map((ingredient, index) => (
+            <p
+              data-testid={ `${index}-ingredient-name-and-measure` }
+              key={ `${index}-${ingredient}` }
+            >
+              {`${ingredient}: ${measures[index]}`}
+
+            </p>
+          ))
+        }
+
+        <h3>Intructions:</h3>
+        {
+          selectedRecipe.length > 0 && (
+            <p data-testid="instructions">{selectedRecipe[0].strInstructions}</p>
+          )
+        }
+
+        {
+          (selectedRecipe.length > 0 && selectedRecipe[0].strYoutube) && (
+            <iframe
+              data-testid="video"
+              width="560"
+              height="315"
+              src={ `https://www.youtube.com/embed/${selectedRecipe[0].strYoutube.slice(getyoutubeParam)}` }
+              title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer;
+              clipboard-write;
+              encrypted-media;
+              gyroscope;
+              picture-in-picture"
+              allowFullScreen
+            />
+          )
         }
       </div>
       <div className="carousel">

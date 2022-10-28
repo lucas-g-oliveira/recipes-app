@@ -4,14 +4,13 @@ import AppContext from './AppContext';
 
 function Provider({ children }) {
   const [searchBtn, setSearchBtn] = useState(false);
-  const [searchByType, setSearchByType] = useState({
-    valueToSearch: '',
-    option: '',
-  });
+  const [searchByType, setSearchByType] = useState({ valueToSearch: '', option: '' });
   const [mealsResults, setMealsResults] = useState([]);
   const [drinksResults, setDrinksResults] = useState([]);
   const [results, setResults] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState([]);
+  const [ingredients, setIngredients] = useState([]);
+  const [measures, setMeasures] = useState([]);
   const [categories, setCategories] = useState([]);
   const [idRecipe, setIdRecipe] = useState('');
   const [filterToggle, setFilterToggle] = useState(false);
@@ -43,7 +42,6 @@ function Provider({ children }) {
     const data = await response.json();
     const cinco = 5;
     const resultsCategories = data[key].slice(0, cinco);
-    // console.log(resultsCategories);
     setCategories(resultsCategories);
   }, []);
 
@@ -53,7 +51,6 @@ function Provider({ children }) {
     const nameEndpoint = `https://www.themealdb.com/api/json/v1/1/search.php?s=${valueToSearch}`;
     const firstLetterEndpoint = `https://www.themealdb.com/api/json/v1/1/search.php?f=${valueToSearch}`;
     const generalFechEndpoint = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
-
     let response;
     if (option === 'ingredientes') {
       response = await fetch(ingredientEndpoint);
@@ -65,7 +62,6 @@ function Provider({ children }) {
       response = await fetch(generalFechEndpoint);
     }
     const data = await response.json();
-
     if (data.meals === null) {
       global.alert('Sorry, we haven\'t found any recipes for these filters.');
     } else {
@@ -81,7 +77,6 @@ function Provider({ children }) {
     const nameEndpoint = `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${valueToSearch}`;
     const firstLetterEndpoint = `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${valueToSearch}`;
     const generalFechEndpoint = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
-
     let response;
     if (option === 'ingredientes') {
       response = await fetch(ingredientEndpoint);
@@ -93,7 +88,6 @@ function Provider({ children }) {
       response = await fetch(generalFechEndpoint);
     }
     const data = await response.json();
-
     if (data.drinks === null) {
       global.alert('Sorry, we haven\'t found any recipes for these filters.');
     } else {
@@ -124,7 +118,6 @@ function Provider({ children }) {
       endpoint = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${categorie}`;
       key = 'drinks';
     }
-
     const response = await fetch(endpoint);
     const data = await response.json();
     setResults(data[key]);
@@ -147,6 +140,30 @@ function Provider({ children }) {
       setFilterToggle(!filterToggle);
     }
   }, [filterToggle, setFilterToggle, resetFilter, setFilterByCategory]);
+
+  const getRecipeIngredients = useCallback((recipe) => {
+    const recipeKeys = Object.entries(recipe[0]);
+    const ingredientsKey = recipeKeys.filter((element) => (
+      element[0].includes('strIngredient')
+    ));
+    const ingredientsArray = ingredientsKey
+      .map((element) => element[1])
+      .filter((element) => element !== '' && element !== null);
+
+    setIngredients(ingredientsArray);
+  }, []);
+
+  const getRecipeIngredientsMeasures = useCallback((recipe) => {
+    const recipeKeys = Object.entries(recipe[0]);
+    const measuresKey = recipeKeys.filter((element) => (
+      element[0].includes('strMeasure')
+    ));
+    const measureArray = measuresKey
+      .map((element) => element[1])
+      .filter((element) => element !== '' && element !== null);
+
+    setMeasures(measureArray);
+  }, []);
 
   const context = useMemo(() => ({
     searchBtn,
@@ -178,6 +195,10 @@ function Provider({ children }) {
     setStartedRecipe,
     visible,
     setVisible,
+    getRecipeIngredients,
+    ingredients,
+    getRecipeIngredientsMeasures,
+    measures,
   }), [
     searchBtn,
     showsearchBtn,
@@ -208,6 +229,10 @@ function Provider({ children }) {
     setStartedRecipe,
     visible,
     setVisible,
+    getRecipeIngredients,
+    ingredients,
+    getRecipeIngredientsMeasures,
+    measures,
   ]);
 
   return (
