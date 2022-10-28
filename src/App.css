@@ -77,32 +77,39 @@ footer {
     transform: rotate(-10deg);
   }
 }
-#startRecipeBtn {
-  position: fixed;
+
+.startRecipeBtn {
   bottom: 0;
-  width: 100%;
-  text-align: center;
   padding-bottom: 64px;
-  /* display: block */
+  position: fixed;
+  text-align: center;
+  width: 100%;
 }
+
 .marginBtn {
   border: solid 1px;
   margin-bottom: 64px;
 }
 
-.suggestions{
-  margin-bottom: 10%;
+.suggestions {
+
   /* overflow: auto; */
+
   /* white-space: nowrap; */
-  display: inline-blocK;
+  display: inline-block;
+  margin-bottom: 10%;
 }
+
 .carousel {
   overflow: auto;
   white-space: nowrap;
 }
-#imgSuggestion {
+
+.imgSuggestion {
   height: auto;
   width: 180px;
 }
+
 /* https://blog.betrybe.com/react/react-carousel/ */
+
 /* https://www.w3schools.com/howto/howto_css_menu_horizontal_scroll.asp */

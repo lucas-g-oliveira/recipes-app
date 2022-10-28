@@ -106,7 +106,7 @@ function RecipesDetails() {
               data-testid={ `${i}-recommendation-card` }
             >
               <img
-                id="imgSuggestion"
+                className="imgSuggestion"
                 src={ e.strMealThumb
                   ? e.strMealThumb
                   : e.strDrinkThumb }
@@ -123,7 +123,7 @@ function RecipesDetails() {
       </div>
       <div className="marginBtn">
         <button
-          id="startRecipeBtn"
+          className="startRecipeBtn"
           type="button"
           data-testid="start-recipe-btn"
           onClick={ () => setStartedRecipe(selectedRecipe) }
