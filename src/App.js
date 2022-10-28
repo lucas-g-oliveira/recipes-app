@@ -27,7 +27,7 @@ function App() {
           <Route
             exact
             path="/meals/{:id-da-receita/in-progress}"
-            component={ RecepiesInProgress }
+            component={ RecipesInProgress }
           />
           <Route
             exact

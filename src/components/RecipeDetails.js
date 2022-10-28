@@ -4,6 +4,7 @@ import AppContext from '../contextApi/AppContext';
 import Footer from './Footer';
 import '../App.css';
 import 'bootstrap/dist/css/bootstrap.css';
+/* import { saveDoneRecipe, getDoneRecipes } from '../Services/doneStorage'; */
 
 function RecipesDetails() {
   const { location: { pathname } } = useHistory();
@@ -34,6 +35,10 @@ function RecipesDetails() {
   /* setSelectedRecipe(pathname); */
   const idOfMeal = pathname.replace('/meals/', '');
   const idOfDrink = pathname.replace('/drinks/', '');
+
+  /*   useEffect(() => {
+    saveDoneRecipe();
+  }, []); */
 
   useEffect(() => {
     const fetchDetail = async () => {
