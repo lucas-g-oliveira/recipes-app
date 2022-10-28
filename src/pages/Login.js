@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
-import { saveEmail } from '../Services/userStorage';
+import { saveEmail } from '../services/userStorage';
 
 export default function Login() {
   const [email, setEmail] = useState('');

@@ -1,10 +1,10 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import AppContext from '../contextApi/AppContext';
 import Footer from './Footer';
 import '../App.css';
 import 'bootstrap/dist/css/bootstrap.css';
-/* import { saveDoneRecipe, getDoneRecipes } from '../Services/doneStorage'; */
+import { getDoneRecipes } from '../services/doneStorage';
 
 function RecipesDetails() {
   const { location: { pathname } } = useHistory();
@@ -24,9 +24,11 @@ function RecipesDetails() {
   const idOfMeal = pathname.replace('/meals/', '');
   const idOfDrink = pathname.replace('/drinks/', '');
 
-  /*   useEffect(() => {
-    saveDoneRecipe();
-  }, []); */
+  const [done, setGetDone] = useState([]);
+
+  useEffect(() => {
+    setGetDone(() => getDoneRecipes());
+  }, [done]);
 
   const getyoutubeParam = 32;
 
@@ -168,17 +170,20 @@ function RecipesDetails() {
           ))
         }
       </div>
-      <div className="marginBtn">
-        <button
-          className="startRecipeBtn"
-          type="button"
-          data-testid="start-recipe-btn"
-          onClick={ () => setStartedRecipe(selectedRecipe) }
-        >
-          Start Recipe
-        </button>
-
-      </div>
+      {
+        (!done)
+        && (
+          <div className="marginBtn">
+            <button
+              className="startRecipeBtn"
+              type="button"
+              data-testid="start-recipe-btn"
+              onClick={ () => setStartedRecipe(selectedRecipe) }
+            >
+              Start Recipe
+            </button>
+          </div>)
+      }
       <Footer />
     </div>
   );
