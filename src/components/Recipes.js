@@ -1,37 +1,45 @@
 import React, { useContext, useEffect } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import AppContext from '../contextApi/AppContext';
-import Footer from './Footer';
 
 function Recipes() {
   const {
     results,
-    fetchMealsApi,
-    fetchDrinksApi,
     categories,
-    // setFilterByCategory,
     resetFilter,
+    setResults,
     handleClickToggle,
+    fetchCategory,
+    setMealsResults,
+    setDrinksResults,
   } = useContext(AppContext);
   const doze = 12;
   const { location: { pathname } } = useHistory();
   const resultsMap = results.slice(0, doze);
-  console.log(resultsMap);
 
   useEffect(() => {
     const fetchTudo = async () => {
+      let generalFechEndpoint;
+      let key;
       if (pathname === '/meals') {
-        fetchMealsApi();
+        generalFechEndpoint = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+        key = 'meals';
       } else {
-        fetchDrinksApi();
+        generalFechEndpoint = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+        key = 'drinks';
+      }
+      const response = await fetch(generalFechEndpoint);
+      const data = await response.json();
+      setResults(data[key]);
+      fetchCategory(key);
+      if (key === 'meals') {
+        setMealsResults(data[key]);
+      } else {
+        setDrinksResults(data[key]);
       }
     };
     fetchTudo();
-  }, [pathname, fetchMealsApi, fetchDrinksApi]);
-
-  // useEffect(() => {
-  //   fetchCategory();
-  // }, []);
+  }, [pathname, setResults, fetchCategory, setMealsResults, setDrinksResults]);
 
   return (
     <div>
@@ -81,7 +89,6 @@ function Recipes() {
           ))
         }
       </div>
-      <Footer />
     </div>
   );
 }
