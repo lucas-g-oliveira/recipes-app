@@ -15,6 +15,10 @@ function Provider({ children }) {
   const [categories, setCategories] = useState([]);
   const [idRecipe, setIdRecipe] = useState('');
   const [filterToggle, setFilterToggle] = useState(false);
+  const [suggestions, setSuggestions] = useState([]);
+  const [finishedRecipe, setFinishedRecipe] = useState([]);
+  const [startedRecipe, setStartedRecipe] = useState([]);
+  const [visible, setVisible] = useState(false);
 
   const showsearchBtn = useCallback(() => {
     setSearchBtn(!searchBtn);
@@ -166,6 +170,14 @@ function Provider({ children }) {
     handleClickToggle,
     setMealsResults,
     setDrinksResults,
+    suggestions,
+    setSuggestions,
+    finishedRecipe,
+    setFinishedRecipe,
+    startedRecipe,
+    setStartedRecipe,
+    visible,
+    setVisible,
   }), [
     searchBtn,
     showsearchBtn,
@@ -188,6 +200,14 @@ function Provider({ children }) {
     handleClickToggle,
     setMealsResults,
     setDrinksResults,
+    suggestions,
+    setSuggestions,
+    finishedRecipe,
+    setFinishedRecipe,
+    startedRecipe,
+    setStartedRecipe,
+    visible,
+    setVisible,
   ]);
 
   return (
