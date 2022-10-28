@@ -77,3 +77,39 @@ footer {
     transform: rotate(-10deg);
   }
 }
+
+.startRecipeBtn {
+  bottom: 0;
+  padding-bottom: 64px;
+  position: fixed;
+  text-align: center;
+  width: 100%;
+}
+
+.marginBtn {
+  border: solid 1px;
+  margin-bottom: 64px;
+}
+
+.suggestions {
+
+  /* overflow: auto; */
+
+  /* white-space: nowrap; */
+  display: inline-block;
+  margin-bottom: 10%;
+}
+
+.carousel {
+  overflow: auto;
+  white-space: nowrap;
+}
+
+.imgSuggestion {
+  height: auto;
+  width: 180px;
+}
+
+/* https://blog.betrybe.com/react/react-carousel/ */
+
+/* https://www.w3schools.com/howto/howto_css_menu_horizontal_scroll.asp */

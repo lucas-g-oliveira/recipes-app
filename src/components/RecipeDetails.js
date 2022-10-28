@@ -2,33 +2,41 @@ import React, { useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import AppContext from '../contextApi/AppContext';
 import Footer from './Footer';
+import '../App.css';
+import 'bootstrap/dist/css/bootstrap.css';
+/* import { saveDoneRecipe, getDoneRecipes } from '../Services/doneStorage'; */
 
 function RecipesDetails() {
   const { location: { pathname } } = useHistory();
-  const {
-    setSelectedRecipe,
+  const { setSelectedRecipe,
     selectedRecipe,
+    setSuggestions,
+    suggestions,
+    setStartedRecipe,
     getRecipeIngredients,
     ingredients,
     getRecipeIngredientsMeasures,
-    measures,
-  } = useContext(AppContext);
+    measures } = useContext(AppContext);
 
-  console.log(selectedRecipe);
+  const seis = 6;
+  const sixSuggestions = suggestions.slice(0, seis);
 
-  const way = pathname.replace('/meals/', '');
-  const wayDrink = pathname.replace('/drinks/', '');
+  const idOfMeal = pathname.replace('/meals/', '');
+  const idOfDrink = pathname.replace('/drinks/', '');
+
+  /*   useEffect(() => {
+    saveDoneRecipe();
+  }, []); */
 
   const getyoutubeParam = 32;
 
   useEffect(() => {
     const fetchDetail = async () => {
-      const detailsMealsEndPoint = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${way}`;
-      const detailsDrinksEndPoint = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${wayDrink}`;
+      const detailsMealsEndPoint = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idOfMeal}`;
+      const detailsDrinksEndPoint = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${idOfDrink}`;
       let response;
       let key;
-      console.log(pathname);
-      if (pathname === `/meals/${way}`) {
+      if (pathname === `/meals/${idOfMeal}`) {
         response = await fetch(detailsMealsEndPoint);
         key = 'meals';
       } else {
@@ -41,14 +49,32 @@ function RecipesDetails() {
       getRecipeIngredientsMeasures(data[key]);
     };
     fetchDetail();
-  }, [
-    pathname,
+  }, [pathname,
     setSelectedRecipe,
-    way,
-    wayDrink,
+    idOfMeal,
+    idOfDrink,
     getRecipeIngredients,
-    getRecipeIngredientsMeasures,
-  ]);
+    getRecipeIngredientsMeasures]);
+
+  useEffect(() => {
+    const fetchSuggestion = async () => {
+      const sugMealsEndPoint = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+      const sugDrinksEndPoint = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+      let response;
+      let key;
+      if (pathname === `/meals/${idOfMeal}`) {
+        response = await fetch(sugDrinksEndPoint);
+        key = 'drinks';
+      } else {
+        response = await fetch(sugMealsEndPoint);
+        key = 'meals';
+      }
+      const data = await response.json();
+      setSuggestions(data[key]);
+    };
+    fetchSuggestion();
+  }, [idOfDrink, idOfMeal, pathname, setSuggestions]);
+  console.log('sugestoes', suggestions);
 
   return (
     <div>
@@ -57,9 +83,11 @@ function RecipesDetails() {
         {
           selectedRecipe.map((recipe) => (
             <div key={ recipe.idMeal ? recipe.idMeal : recipe.idDrink }>
-              <h2 data-testid="recipe-title">
+              <h3
+                data-testid="recipe-title"
+              >
                 { recipe.strMeal ? recipe.strMeal : recipe.strDrink }
-              </h2>
+              </h3>
               <img
                 src={ recipe.strMealThumb ? recipe.strMealThumb : recipe.strDrinkThumb }
                 alt="recipe"
@@ -107,19 +135,49 @@ function RecipesDetails() {
               title="YouTube video player"
               frameBorder="0"
               allow="accelerometer;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture"
+              clipboard-write;
+              encrypted-media;
+              gyroscope;
+              picture-in-picture"
               allowFullScreen
             />
           )
         }
-        {/* {
-          selectedRecipe.length > 0 && (
-            <p data-testid="instructions">{selectedRecipe[0].strInstructions}</p>
-          )
-        } */}
+      </div>
+      <div className="carousel">
+        {
+          sixSuggestions.map((e, i) => (
+            <div
+              className="suggestions"
+              key={ e.idMeal ? e.idMeal : e.idDrink }
+              data-testid={ `${i}-recommendation-card` }
+            >
+              <img
+                className="imgSuggestion"
+                src={ e.strMealThumb
+                  ? e.strMealThumb
+                  : e.strDrinkThumb }
+                alt={ e.strMeal ? e.strMeal : e.strDrink }
+              />
+              <h2
+                data-testid={ `${i}-recommendation-title` }
+              >
+                {e.strMeal ? e.strMeal : e.strDrink}
+              </h2>
+            </div>
+          ))
+        }
+      </div>
+      <div className="marginBtn">
+        <button
+          className="startRecipeBtn"
+          type="button"
+          data-testid="start-recipe-btn"
+          onClick={ () => setStartedRecipe(selectedRecipe) }
+        >
+          Start Recipe
+        </button>
+
       </div>
       <Footer />
     </div>
