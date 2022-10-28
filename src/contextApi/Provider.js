@@ -12,6 +12,10 @@ function Provider({ children }) {
   const [drinksResults, setDrinksResults] = useState([]);
   const [results, setResults] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState([]);
+
+  const [ingredients, setIngredients] = useState([]);
+  const [measures, setMeasures] = useState([]);
+
   const [categories, setCategories] = useState([]);
   const [idRecipe, setIdRecipe] = useState('');
   const [filterToggle, setFilterToggle] = useState(false);
@@ -144,6 +148,32 @@ function Provider({ children }) {
     }
   }, [filterToggle, setFilterToggle, resetFilter, setFilterByCategory]);
 
+  const getRecipeIngredients = useCallback((recipe) => {
+    const recipeKeys = Object.entries(recipe[0]);
+    const ingredientsKey = recipeKeys.filter((element) => (
+      element[0].includes('strIngredient')
+    ));
+
+    const ingredientsArray = ingredientsKey
+      .map((element) => element[1])
+      .filter((element) => element !== '' && element !== null);
+
+    setIngredients(ingredientsArray);
+  }, []);
+
+  const getRecipeIngredientsMeasures = useCallback((recipe) => {
+    const recipeKeys = Object.entries(recipe[0]);
+    const measuresKey = recipeKeys.filter((element) => (
+      element[0].includes('strMeasure')
+    ));
+
+    const measureArray = measuresKey
+      .map((element) => element[1])
+      .filter((element) => element !== '' && element !== null);
+
+    setMeasures(measureArray);
+  }, []);
+
   const context = useMemo(() => ({
     searchBtn,
     showsearchBtn,
@@ -166,6 +196,10 @@ function Provider({ children }) {
     handleClickToggle,
     setMealsResults,
     setDrinksResults,
+    getRecipeIngredients,
+    ingredients,
+    getRecipeIngredientsMeasures,
+    measures,
   }), [
     searchBtn,
     showsearchBtn,
@@ -188,6 +222,10 @@ function Provider({ children }) {
     handleClickToggle,
     setMealsResults,
     setDrinksResults,
+    getRecipeIngredients,
+    ingredients,
+    getRecipeIngredientsMeasures,
+    measures,
   ]);
 
   return (
