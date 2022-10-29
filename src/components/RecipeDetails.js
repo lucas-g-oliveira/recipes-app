@@ -4,7 +4,7 @@ import AppContext from '../contextApi/AppContext';
 import Footer from './Footer';
 import '../App.css';
 import 'bootstrap/dist/css/bootstrap.css';
-/* import { saveDoneRecipe, getDoneRecipes } from '../Services/doneStorage'; */
+import ShareAndFavorite from './ShareAndFavorite';
 
 function RecipesDetails() {
   const { location: { pathname } } = useHistory();
@@ -23,10 +23,6 @@ function RecipesDetails() {
 
   const idOfMeal = pathname.replace('/meals/', '');
   const idOfDrink = pathname.replace('/drinks/', '');
-
-  /*   useEffect(() => {
-    saveDoneRecipe();
-  }, []); */
 
   const getyoutubeParam = 32;
 
@@ -74,7 +70,6 @@ function RecipesDetails() {
     };
     fetchSuggestion();
   }, [idOfDrink, idOfMeal, pathname, setSuggestions]);
-  console.log('sugestoes', suggestions);
 
   return (
     <div>
@@ -88,6 +83,7 @@ function RecipesDetails() {
               >
                 { recipe.strMeal ? recipe.strMeal : recipe.strDrink }
               </h3>
+              <ShareAndFavorite />
               <img
                 src={ recipe.strMealThumb ? recipe.strMealThumb : recipe.strDrinkThumb }
                 alt="recipe"
