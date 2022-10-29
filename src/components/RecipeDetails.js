@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import AppContext from '../contextApi/AppContext';
 import Footer from './Footer';
 import '../App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import { getDoneRecipes } from '../services/doneStorage';
+import { getInProgressRecipe } from '../services/inProgressStorage';
 
 function RecipesDetails() {
   const { location: { pathname } } = useHistory();
@@ -25,10 +26,12 @@ function RecipesDetails() {
   const idOfDrink = pathname.replace('/drinks/', '');
 
   const [done, setGetDone] = useState([]);
+  const [inProgress, setInProgress] = useState([]);
 
   useEffect(() => {
     setGetDone(() => getDoneRecipes());
-  }, [done]);
+    setInProgress(() => getInProgressRecipe());
+  }, []);
 
   const getyoutubeParam = 32;
 
@@ -171,7 +174,9 @@ function RecipesDetails() {
         }
       </div>
       {
-        (!done)
+        (!done && !inProgress)
+        // depois precisaremos verificar o id da comida ou bebida salvas no estado para fazer a renderização correta
+        // a renderização desse botão dependerá da vericação do localStorage, a lógica seguinte é provisória
         && (
           <div className="marginBtn">
             <button
@@ -182,6 +187,21 @@ function RecipesDetails() {
             >
               Start Recipe
             </button>
+          </div>)
+      }
+      {
+        (inProgress)
+        && (
+          <div className="marginBtn">
+            <Link to={ `${pathname}/in-progress` }>
+              <button
+                className="startRecipeBtn"
+                type="button"
+                data-testid="start-recipe-btn"
+              >
+                Continue Recipe
+              </button>
+            </Link>
           </div>)
       }
       <Footer />
