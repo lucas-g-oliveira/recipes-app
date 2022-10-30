@@ -13,13 +13,14 @@ function ShareAndFavorite() {
 
   const [hasCopy, setHasCopy] = useState(false);
   const [hasFavorite, setHasFavorite] = useState(false);
+  console.log(hasFavorite);
 
   const getCopiedLink = () => {
     copy(`http://localhost:3000${pathname}`);
     setHasCopy(true);
   };
 
-  const saveFavoriteRecipe = () => {
+  const saveFavoriteRecipe = useCallback(() => {
     const favorites = getFavorites();
 
     const recipe = {
@@ -43,12 +44,20 @@ function ShareAndFavorite() {
     let updateFavorites;
 
     if (favorites !== null) {
-      updateFavorites = [...favorites, recipe];
+      const checkFavorite = favorites.some((favorite) => favorite.id === recipe.id);
+      if (checkFavorite) {
+        updateFavorites = favorites.filter((favorite) => favorite.id !== recipe.id);
+        setHasFavorite(false);
+      } else {
+        updateFavorites = [...favorites, recipe];
+        setHasFavorite(true);
+      }
     } else {
       updateFavorites = [recipe];
+      setHasFavorite(true);
     }
     saveFavorites(updateFavorites);
-  };
+  }, [selectedRecipe]);
 
   const checkFavoriteRecipe = useCallback(() => {
     const favorites = getFavorites();
@@ -61,8 +70,10 @@ function ShareAndFavorite() {
       recipeId = pathname.replace('/drinks/', '');
     }
 
+    setHasFavorite(false);
     if (favorites !== null) {
       const checkFavorite = favorites.some((recipe) => recipe.id === recipeId);
+      console.log(checkFavorite);
       if (checkFavorite) {
         setHasFavorite(checkFavorite);
       }
@@ -70,6 +81,7 @@ function ShareAndFavorite() {
   }, [pathname]);
 
   useEffect(() => {
+    // saveFavoriteRecipe();
     checkFavoriteRecipe();
   }, [checkFavoriteRecipe]);
 
@@ -101,11 +113,6 @@ function ShareAndFavorite() {
           </div>
         )
       }
-      {/* {
-        hasFavorite
-          ? <img src={ blackHeartIcon } alt="favorite" />
-          : <img src={ whiteHeartIcon } alt="favorite" />
-      } */}
     </div>
   );
 }
