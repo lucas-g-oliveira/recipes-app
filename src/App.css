@@ -110,6 +110,10 @@ footer {
   width: 200px;
 }
 
+.checked {
+  text-decoration: line-through solid black;
+}
+
 /* https://blog.betrybe.com/react/react-carousel/ */
 
 /* https://www.w3schools.com/howto/howto_css_menu_horizontal_scroll.asp */

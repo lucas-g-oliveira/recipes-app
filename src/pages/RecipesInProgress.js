@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import AppContext from '../contextApi/AppContext';
 import ShareAndFavorite from '../components/ShareAndFavorite';
@@ -13,11 +13,18 @@ export default function RecipesInProgress() {
     getRecipeIngredientsMeasures,
     measures } = useContext(AppContext);
 
+  const [isActive, setIsActive] = useState(false);
+
   const { id } = useParams();
+  const handleClick = (event) => {
+    // setIsActive(!isActive);
+    event.currentTarget.classList.toggle('checked');
+  };
 
   const getyoutubeParam = 32;
 
   console.log(selectedRecipe);
+  console.log(isActive, 'is');
 
   useEffect(() => {
     const fetchDetail = async () => {
@@ -107,6 +114,8 @@ export default function RecipesInProgress() {
                 type="checkbox"
                 name="ingredient"
                 id={ `${index}-ingredient` }
+                // className={ isActive ? 'checked' : '' }
+                onClick={ handleClick }
               />
             </label>
             <p
