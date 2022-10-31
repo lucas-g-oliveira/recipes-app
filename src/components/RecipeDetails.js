@@ -4,8 +4,8 @@ import AppContext from '../contextApi/AppContext';
 import Footer from './Footer';
 import '../App.css';
 import 'bootstrap/dist/css/bootstrap.css';
-import { getDoneRecipes } from '../services/doneStorage';
 import { getInProgressRecipe } from '../services/inProgressStorage';
+import { getDoneRecipes } from '../services/doneStorage';
 
 function RecipesDetails() {
   const { location: { pathname } } = useHistory();
