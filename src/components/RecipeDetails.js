@@ -53,6 +53,7 @@ function RecipesDetails() {
     getRecipeIngredientsMeasures]);
 
   useEffect(() => {
+    console.log('estou em recipe details');
     const fetchSuggestion = async () => {
       const sugMealsEndPoint = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
       const sugDrinksEndPoint = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
