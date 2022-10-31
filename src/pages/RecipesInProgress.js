@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import AppContext from '../contextApi/AppContext';
 import ShareAndFavorite from '../components/ShareAndFavorite';
@@ -13,12 +13,13 @@ export default function RecipesInProgress() {
     getRecipeIngredientsMeasures,
     measures } = useContext(AppContext);
 
-  const [isActive, setIsActive] = useState(false);
+  /* const [isActive, setIsActive] = useState(false); */
 
   const { id } = useParams();
-  const handleClick = (event) => {
+  const handleClick = () => {
     // setIsActive(!isActive);
-    event.currentTarget.classList.toggle('checked');
+    const ingrediente = document.getElementsByClassName('ingredients');
+    ingrediente.classList.add('checked');
   };
 
   const getyoutubeParam = 32;
@@ -105,12 +106,16 @@ export default function RecipesInProgress() {
       <h3>Ingredients:</h3>
       {
         ingredients.map((ingredient, index) => (
-          <div key={ `${index}-${ingredient}` }>
+          <div
+            key={ `${index}-${ingredient}` }
+            className="ingredients"
+          >
             <label
               htmlFor={ `${index}-ingredient` }
               data-testid={ `${index}-ingredient-step` }
             >
               <input
+                className="box"
                 type="checkbox"
                 name="ingredient"
                 id={ `${index}-ingredient` }
