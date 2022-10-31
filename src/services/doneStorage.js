@@ -1,4 +1,4 @@
-const saveDoneRecipe = () => {
+export const saveDoneRecipe = () => {
   localStorage.setItem('doneRecipes', JSON.stringify({
     id: 'id-da-receita',
     type: 'meal-ou-drink',
@@ -12,6 +12,4 @@ const saveDoneRecipe = () => {
   }));
 };
 
-export const getDoneRecipes = () => JSON.parse(localStorage.getItem('doneRecepies'));
-
-export default { saveDoneRecipe, getDoneRecipes };
+export const getDoneRecipes = () => JSON.parse(localStorage.getItem('doneRecipes'));

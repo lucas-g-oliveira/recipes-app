@@ -1,13 +1,17 @@
-import React, { useContext, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+import { useHistory, Link, useParams } from 'react-router-dom';
 import AppContext from '../contextApi/AppContext';
-import Footer from './Footer';
+// import Footer from './Footer';
 import '../App.css';
 import 'bootstrap/dist/css/bootstrap.css';
+import { getInProgressRecipe, saveInProgressRecipe } from '../services/inProgressStorage';
+import { getDoneRecipes } from '../services/doneStorage';
 import ShareAndFavorite from './ShareAndFavorite';
 
 function RecipesDetails() {
   const { location: { pathname } } = useHistory();
+  const params = useParams();
+  console.log(params);
   const { setSelectedRecipe,
     selectedRecipe,
     setSuggestions,
@@ -23,6 +27,16 @@ function RecipesDetails() {
 
   const idOfMeal = pathname.replace('/meals/', '');
   const idOfDrink = pathname.replace('/drinks/', '');
+
+  const [done, setGetDone] = useState([]);
+  const [inProgress, setInProgress] = useState([]);
+
+  useEffect(() => {
+    setGetDone(() => getDoneRecipes());
+    setInProgress(() => saveInProgressRecipe());
+    setInProgress(() => getInProgressRecipe());
+    console.log(inProgress);
+  }, []);
 
   const getyoutubeParam = 32;
 
@@ -165,18 +179,38 @@ function RecipesDetails() {
           ))
         }
       </div>
-      <div className="marginBtn">
-        <button
-          className="startRecipeBtn"
-          type="button"
-          data-testid="start-recipe-btn"
-          onClick={ () => setStartedRecipe(selectedRecipe) }
-        >
-          Start Recipe
-        </button>
-
-      </div>
-      <Footer />
+      {
+        (!done && !inProgress)
+        // depois precisaremos verificar o id da comida ou bebida salvas no estado para fazer a renderização correta
+        // a renderização desse botão dependerá da vericação do localStorage, a lógica seguinte é provisória
+        && (
+          <div className="marginBtn">
+            <button
+              className="startRecipeBtn"
+              type="button"
+              data-testid="start-recipe-btn"
+              onClick={ () => setStartedRecipe(selectedRecipe) }
+            >
+              Start Recipe
+            </button>
+          </div>)
+      }
+      {
+        (!done && inProgress)
+        && (
+          <div className="marginBtn">
+            <Link to={ `${pathname}/in-progress` }>
+              <button
+                className="startRecipeBtn"
+                type="button"
+                data-testid="start-recipe-btn"
+              >
+                Continue Recipe
+              </button>
+            </Link>
+          </div>)
+      }
+      {/* <Footer /> */}
     </div>
   );
 }
