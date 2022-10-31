@@ -83,7 +83,6 @@ describe('Testa o componente Recipes', () => {
     expect(await screen.findByRole('img', { name: /155 belmont/i })).toBeInTheDocument();
 
     global.fetch = jest.fn(async () => ({ json: () => drinks }));
-
     const resetFilter = await screen.findByRole('button', { name: /all/i });
     expect(resetFilter).toBeInTheDocument();
     userEvent.click(resetFilter);
