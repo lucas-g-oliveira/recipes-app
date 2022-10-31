@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { getDoneRecipes } from '../services/doneStorage';
 import shareIcon from '../images/shareIcon.svg';
 
@@ -31,16 +32,33 @@ const copy = require('clipboard-copy');
 
 function DoneRecipes() {
   const [doneRecipes, setDoneRecipes] = useState([]);
+  const [filteredDoneRecipes, setFilteredDoneRecipes] = useState([]);
   const [hasCopy, setHasCopy] = useState(false);
 
   const updateDoneRecipes = useCallback(() => {
     const recipesDone = getDoneRecipes('doneRecepies');
     if (recipesDone !== null) {
       setDoneRecipes(recipesDone);
-    } else {
+      setFilteredDoneRecipes(recipesDone);
+    } else { // provisorio: aguardando implementacao da funcao saveDoneRecipe (que preenche o localStorage)
       setDoneRecipes(recipeTest);
+      setFilteredDoneRecipes(recipeTest);
     }
   }, []);
+
+  const filterbyType = useCallback((type) => {
+    let updateFilter;
+    if (type === 'meals') {
+      updateFilter = doneRecipes.filter((recipe) => recipe.type === 'meal');
+      console.log(updateFilter);
+    } else if (type === 'drinks') {
+      updateFilter = doneRecipes.filter((recipe) => recipe.type === 'drink');
+      console.log(updateFilter);
+    } else {
+      updateFilter = [...doneRecipes];
+    }
+    setFilteredDoneRecipes(updateFilter);
+  }, [doneRecipes]);
 
   const getCopiedLink = (page, recipeId) => {
     copy(`http://localhost:3000/${page}s/${recipeId}`);
@@ -57,6 +75,7 @@ function DoneRecipes() {
         <button
           type="button"
           data-testid="filter-by-all-btn"
+          onClick={ filterbyType }
         >
           All
         </button>
@@ -64,6 +83,7 @@ function DoneRecipes() {
         <button
           type="button"
           data-testid="filter-by-meal-btn"
+          onClick={ () => filterbyType('meals') }
         >
           Meals
         </button>
@@ -71,18 +91,22 @@ function DoneRecipes() {
         <button
           type="button"
           data-testid="filter-by-drink-btn"
+          onClick={ () => filterbyType('drinks') }
         >
           Drinks
         </button>
       </div>
 
-      {(doneRecipes.length > 0) && doneRecipes.map((e, index) => (
+      {(filteredDoneRecipes.length > 0) && filteredDoneRecipes.map((e, index) => (
         <div key={ e.id }>
-          <img
-            src={ e.image }
-            data-testid={ `${index}-horizontal-image` }
-            alt="recipe"
-          />
+          <Link to={ `/${e.type}s/${e.id}` }>
+            <img
+              src={ e.image }
+              data-testid={ `${index}-horizontal-image` }
+              alt="recipe"
+              width="300px"
+            />
+          </Link>
           {
             e.type === 'meal'
               ? (
@@ -96,10 +120,12 @@ function DoneRecipes() {
                 </h4>
               )
           }
+          <Link to={ `/${e.type}s/${e.id}` }>
+            <h3 data-testid={ `${index}-horizontal-name` }>
+              {e.name}
+            </h3>
+          </Link>
 
-          <h3 data-testid={ `${index}-horizontal-name` }>
-            {e.name}
-          </h3>
           <p data-testid={ `${index}-horizontal-done-date` }>
             {e.doneDate}
           </p>
