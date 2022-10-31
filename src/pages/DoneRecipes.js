@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { getDoneRecipes } from '../services/doneStorage';
+import shareIcon from '../images/shareIcon.svg';
 
 const recipeTest = [
   {
@@ -42,7 +43,7 @@ function DoneRecipes() {
   }, []);
 
   const getCopiedLink = (page, recipeId) => {
-    copy(`http://localhost:3000/${page}/${recipeId}`);
+    copy(`http://localhost:3000/${page}s/${recipeId}`);
     setHasCopy(true);
   };
 
@@ -76,54 +77,60 @@ function DoneRecipes() {
       </div>
 
       {(doneRecipes.length > 0) && doneRecipes.map((e, index) => (
-        <div
-          key={ e.id }
-        >
+        <div key={ e.id }>
           <img
             src={ e.image }
             data-testid={ `${index}-horizontal-image` }
             alt="recipe"
           />
-          <h4 data-testid={ `${index}-horizontal-top-text` }>
-            {e.category}
-          </h4>
-          <h3
-            data-testid={ `${index}-horizontal-name` }
-          >
+          {
+            e.type === 'meal'
+              ? (
+                <h4 data-testid={ `${index}-horizontal-top-text` }>
+                  {`${e.nationality} - ${e.category}`}
+                </h4>
+              )
+              : (
+                <h4 data-testid={ `${index}-horizontal-top-text` }>
+                  {`${e.category} - ${e.alcoholicOrNot}`}
+                </h4>
+              )
+          }
+
+          <h3 data-testid={ `${index}-horizontal-name` }>
             {e.name}
           </h3>
-          <p
-            data-testid={ `${index}-horizontal-done-date` }
-          >
+          <p data-testid={ `${index}-horizontal-done-date` }>
             {e.doneDate}
           </p>
           <button
             type="button"
-            data-testid={ `${index}-horizontal-share-btn` }
             onClick={ () => getCopiedLink(e.type, e.id) }
           >
-            Share
+            <img
+              src={ shareIcon }
+              alt="shareBtn"
+              data-testid={ `${index}-horizontal-share-btn` }
+            />
           </button>
           {
-            hasCopy && (
-              <div>
-                <p>Link copied!</p>
-                <button type="button" onClick={ () => setHasCopy(false) }>Ok</button>
-              </div>
-            )
-          }
-          {
-            (e.tags.length > 0) && e.tags.map((tag) => (
-              <p
-                data-testid={ `${index}-${tag}-horizontal-tag` }
-                key={ tag }
-              >
-                {tag}
-              </p>
-            ))
+            (e.tags.filter((_tag, indiceTag) => indiceTag < 2)
+              .map((tag) => (
+                <p data-testid={ `${index}-${tag}-horizontal-tag` } key={ tag }>
+                  {tag}
+                </p>
+              )))
           }
         </div>
       ))}
+      {
+        hasCopy && (
+          <div>
+            <p>Link copied!</p>
+            <button type="button" onClick={ () => setHasCopy(false) }>Ok</button>
+          </div>
+        )
+      }
     </div>
   );
 }
