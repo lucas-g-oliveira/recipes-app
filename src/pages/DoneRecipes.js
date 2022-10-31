@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getDoneRecipes } from '../services/doneStorage';
 import shareIcon from '../images/shareIcon.svg';
+import Header from '../components/Header';
 
 const recipeTest = [
   {
@@ -71,6 +72,7 @@ function DoneRecipes() {
 
   return (
     <div>
+      <Header />
       <div>
         <button
           type="button"
