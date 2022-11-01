@@ -18,7 +18,7 @@ function StartRecipeBtn() {
     const updateProgress = getInProgressRecipe();
     if (updateProgress !== null) {
       setInProgress(updateProgress);
-      if (updateProgress[page].length > 0) {
+      if (updateProgress[page] && updateProgress[page].length > 0) {
         const started = updateProgress[page].some((id) => id === recipeId);
         setHasProgress(started);
       }

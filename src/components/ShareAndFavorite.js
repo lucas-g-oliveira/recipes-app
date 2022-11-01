@@ -1,9 +1,10 @@
 import React, { useState, useContext, useEffect, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import AppContext from '../contextApi/AppContext';
-import { getFavorites, saveFavorites } from '../services/saveRecipe';
+import { getFavorites, saveFavorites } from '../services/favoriteStorage';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import shareIcon from '../images/shareIcon.svg';
 
 const copy = require('clipboard-copy');
 
@@ -13,7 +14,6 @@ function ShareAndFavorite() {
 
   const [hasCopy, setHasCopy] = useState(false);
   const [hasFavorite, setHasFavorite] = useState(false);
-  // console.log(hasFavorite);
 
   const getCopiedLink = () => {
     copy(`http://localhost:3000${pathname}`);
@@ -73,7 +73,6 @@ function ShareAndFavorite() {
     setHasFavorite(false);
     if (favorites !== null) {
       const checkFavorite = favorites.some((recipe) => recipe.id === recipeId);
-      // console.log(checkFavorite);
       if (checkFavorite) {
         setHasFavorite(checkFavorite);
       }
@@ -89,10 +88,9 @@ function ShareAndFavorite() {
     <div>
       <button
         type="button"
-        data-testid="share-btn"
         onClick={ () => getCopiedLink() }
       >
-        Share
+        <img src={ shareIcon } alt="share" data-testid="share-btn" />
       </button>
       <button
         type="button"
