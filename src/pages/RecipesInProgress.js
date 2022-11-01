@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import AppContext from '../contextApi/AppContext';
 import ShareAndFavorite from '../components/ShareAndFavorite';
@@ -13,11 +13,11 @@ export default function RecipesInProgress() {
     getRecipeIngredientsMeasures,
     measures } = useContext(AppContext);
 
-  /* const [isActive, setIsActive] = useState(false); */
+  const [isActive, setIsActive] = useState(false);
 
   const { id } = useParams();
   const handleClick = () => {
-    // setIsActive(!isActive);
+    setIsActive(!isActive);
     const ingrediente = document.getElementsByClassName('ingredients');
     ingrediente.classList.add('checked');
   };

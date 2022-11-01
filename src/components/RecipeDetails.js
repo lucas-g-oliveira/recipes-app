@@ -1,12 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { useHistory, Link, useParams } from 'react-router-dom';
+import React, { useContext, useEffect } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 import AppContext from '../contextApi/AppContext';
-// import Footer from './Footer';
 import '../App.css';
 import 'bootstrap/dist/css/bootstrap.css';
-import { getInProgressRecipe, saveInProgressRecipe } from '../services/inProgressStorage';
-import { getDoneRecipes } from '../services/doneStorage';
+// import { getInProgressRecipe, saveInProgressRecipe } from '../services/inProgressStorage';
+// import { getDoneRecipes } from '../services/doneStorage';
 import ShareAndFavorite from './ShareAndFavorite';
+import StartRecipeBtn from './StartRecipeBtn';
 
 function RecipesDetails() {
   const { location: { pathname } } = useHistory();
@@ -16,7 +16,7 @@ function RecipesDetails() {
     selectedRecipe,
     setSuggestions,
     suggestions,
-    setStartedRecipe,
+    // setStartedRecipe,
     getRecipeIngredients,
     ingredients,
     getRecipeIngredientsMeasures,
@@ -28,15 +28,15 @@ function RecipesDetails() {
   const idOfMeal = pathname.replace('/meals/', '');
   const idOfDrink = pathname.replace('/drinks/', '');
 
-  const [done, setGetDone] = useState([]);
-  const [inProgress, setInProgress] = useState([]);
+  // const [done, setGetDone] = useState([]);
+  // const [inProgress, setInProgress] = useState([]);
 
-  useEffect(() => {
-    setGetDone(() => getDoneRecipes());
-    setInProgress(() => saveInProgressRecipe());
-    setInProgress(() => getInProgressRecipe());
-    console.log(inProgress);
-  }, []);
+  // useEffect(() => {
+  //   setGetDone(() => getDoneRecipes());
+  //   setInProgress(() => saveInProgressRecipe());
+  //   setInProgress(() => getInProgressRecipe());
+  //   console.log(inProgress);
+  // }, []);
 
   const getyoutubeParam = 32;
 
@@ -67,7 +67,7 @@ function RecipesDetails() {
     getRecipeIngredientsMeasures]);
 
   useEffect(() => {
-    console.log('estou em recipe details');
+    // console.log('estou em recipe details');
     const fetchSuggestion = async () => {
       const sugMealsEndPoint = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
       const sugDrinksEndPoint = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
@@ -179,7 +179,7 @@ function RecipesDetails() {
           ))
         }
       </div>
-      {
+      {/* {
         (!done && !inProgress)
         // depois precisaremos verificar o id da comida ou bebida salvas no estado para fazer a renderização correta
         // a renderização desse botão dependerá da vericação do localStorage, a lógica seguinte é provisória
@@ -209,8 +209,8 @@ function RecipesDetails() {
               </button>
             </Link>
           </div>)
-      }
-      {/* <Footer /> */}
+      } */}
+      <StartRecipeBtn />
     </div>
   );
 }

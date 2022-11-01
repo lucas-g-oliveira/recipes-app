@@ -13,7 +13,7 @@ function ShareAndFavorite() {
 
   const [hasCopy, setHasCopy] = useState(false);
   const [hasFavorite, setHasFavorite] = useState(false);
-  console.log(hasFavorite);
+  // console.log(hasFavorite);
 
   const getCopiedLink = () => {
     copy(`http://localhost:3000${pathname}`);
@@ -73,7 +73,7 @@ function ShareAndFavorite() {
     setHasFavorite(false);
     if (favorites !== null) {
       const checkFavorite = favorites.some((recipe) => recipe.id === recipeId);
-      console.log(checkFavorite);
+      // console.log(checkFavorite);
       if (checkFavorite) {
         setHasFavorite(checkFavorite);
       }
