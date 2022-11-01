@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { getFavorites } from '../services/favoriteStorage';
+import { getFavorites, saveFavorites } from '../services/favoriteStorage';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import Header from '../components/Header';
@@ -14,7 +14,6 @@ function FavoriteRecipes() {
 
   const updateFavoriteRecipes = useCallback(() => {
     const favorites = getFavorites();
-    console.log(favorites);
     if (favorites !== null) {
       setFavoriteRecipes(favorites);
       setFilteredFavoriteRecipes(favorites);
@@ -36,6 +35,13 @@ function FavoriteRecipes() {
   const getCopiedLink = (page, recipeId) => {
     copy(`http://localhost:3000/${page}s/${recipeId}`);
     setHasCopy(true);
+  };
+
+  const removeFavoriteRecipe = (recipeId) => {
+    const updateRecipes = favoriteRecipes.filter((recipe) => recipe.id !== recipeId);
+    saveFavorites(updateRecipes);
+    setFavoriteRecipes(updateRecipes);
+    setFilteredFavoriteRecipes(updateRecipes);
   };
 
   useEffect(() => {
@@ -115,7 +121,7 @@ function FavoriteRecipes() {
 
           <button
             type="button"
-            onClick={ () => getCopiedLink(e.type, e.id) }
+            onClick={ () => removeFavoriteRecipe(e.id) }
           >
             <img
               src={ blackHeartIcon }
@@ -123,14 +129,6 @@ function FavoriteRecipes() {
               data-testid={ `${index}-horizontal-favorite-btn` }
             />
           </button>
-          {/* {
-            (e.tags.filter((_tag, indiceTag) => indiceTag < 2)
-              .map((tag) => (
-                <p data-testid={ `${index}-${tag}-horizontal-tag` } key={ tag }>
-                  {tag}
-                </p>
-              )))
-          } */}
         </div>
       ))}
       {
