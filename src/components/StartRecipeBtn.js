@@ -12,7 +12,6 @@ function StartRecipeBtn() {
   const [hasDone, setHasDone] = useState(false);
   const [inProgress, setInProgress] = useState([]);
   const [hasProgress, setHasProgress] = useState(false);
-  // const [redirect, setRedirect] = useState(false);
   console.log('done', done);
 
   const updateRecipeProgress = useCallback(() => {
@@ -34,6 +33,8 @@ function StartRecipeBtn() {
     }
   }, [page, recipeId]);
 
+  // essa funcao salva apenas o id da receita no localStorage na chave inProgressRecipes.
+  // refatorar no requisito 40
   const addProgressToRecipe = () => {
     let updateProgress;
     if (inProgress[page]) {
@@ -80,21 +81,6 @@ function StartRecipeBtn() {
           </Link>
         )
       }
-      {/* <div className="marginBtn">
-        <Link to={ `${pathname}/in-progress` }>
-          <button
-            className="startRecipeBtn"
-            type="button"
-            data-testid="start-recipe-btn"
-            onClick={ !hasProgress
-              ? () => addProgressToRecipe()
-              : () => setRedirect(true) }
-          >
-            { !hasProgress ? 'Start Recipe' : 'Continue Recipe' }
-          </button>
-        </Link>
-        { redirect && <Redirect to={ `${pathname}/in-progress` } /> }
-      </div> */}
     </div>
   );
 }

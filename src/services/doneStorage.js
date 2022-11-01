@@ -1,5 +1,5 @@
 export const saveDoneRecipe = () => {
-  localStorage.setItem('doneRecipes', JSON.stringify({
+  localStorage.setItem('doneRecipes', JSON.stringify([{
     id: 'id-da-receita',
     type: 'meal-ou-drink',
     nationality: 'nacionalidade-da-receita-ou-texto-vazio',
@@ -9,7 +9,7 @@ export const saveDoneRecipe = () => {
     image: 'imagem-da-receita',
     doneDate: 'quando-a-receita-foi-concluida',
     tags: 'array-de-tags-da-receita-ou-array-vazio',
-  }));
+  }]));
 };
 
 export const getDoneRecipes = () => JSON.parse(localStorage.getItem('doneRecipes'));
