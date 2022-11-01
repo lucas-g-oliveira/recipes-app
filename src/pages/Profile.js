@@ -6,7 +6,27 @@ function Profile() {
   return (
     <div>
       <Header />
-      <h2>Profile</h2>
+      <div>
+        <h3 data-testid="profile-email"> email </h3>
+        <button
+          type="button"
+          data-testid="profile-done-btn"
+        >
+          Done Recipes
+        </button>
+        <button
+          type="button"
+          data-testid="profile-favorite-btn"
+        >
+          Favorite Recipes
+        </button>
+        <button
+          type="button"
+          data-testid="profile-logout-btn"
+        >
+          Favorite Recipes
+        </button>
+      </div>
       <Footer />
     </div>
   );
