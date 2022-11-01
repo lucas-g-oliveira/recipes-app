@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory, Link, useParams } from 'react-router-dom';
 import AppContext from '../contextApi/AppContext';
-// import Footer from './Footer';
 import '../App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import { getInProgressRecipe, saveInProgressRecipe } from '../services/inProgressStorage';
 import { getDoneRecipes } from '../services/doneStorage';
 import ShareAndFavorite from './ShareAndFavorite';
+// import StartRecipeBtn from './StartRecipeBtn';
 
 function RecipesDetails() {
   const { location: { pathname } } = useHistory();
@@ -67,7 +67,7 @@ function RecipesDetails() {
     getRecipeIngredientsMeasures]);
 
   useEffect(() => {
-    console.log('estou em recipe details');
+    // console.log('estou em recipe details');
     const fetchSuggestion = async () => {
       const sugMealsEndPoint = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
       const sugDrinksEndPoint = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
@@ -210,7 +210,7 @@ function RecipesDetails() {
             </Link>
           </div>)
       }
-      {/* <Footer /> */}
+      {/* <StartRecipeBtn /> */}
     </div>
   );
 }
