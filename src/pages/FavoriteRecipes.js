@@ -111,23 +111,17 @@ function FavoriteRecipes() {
           <button
             type="button"
             onClick={ () => getCopiedLink(e.type, e.id) }
+            data-testid={ `${index}-horizontal-share-btn` }
           >
-            <img
-              src={ shareIcon }
-              alt="shareBtn"
-              data-testid={ `${index}-horizontal-share-btn` }
-            />
+            <img src={ shareIcon } alt="shareBtn" width="30px" />
           </button>
 
           <button
             type="button"
             onClick={ () => removeFavoriteRecipe(e.id) }
+            data-testid={ `${index}-horizontal-favorite-btn` }
           >
-            <img
-              src={ blackHeartIcon }
-              alt="favorite"
-              data-testid={ `${index}-horizontal-favorite-btn` }
-            />
+            <img src={ blackHeartIcon } alt="favorite" />
           </button>
         </div>
       ))}

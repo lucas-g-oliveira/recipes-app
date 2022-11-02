@@ -36,111 +36,54 @@ afterEach(() => {
 describe('Testa se receitas sao adicionadas na tela de favoritos', () => {
   const favoritePage = '/favorite-recipes';
 
-  it.only('adiciona uma receita meal aos favoritos', async () => {
+  it('checa filtros por tipo de receita', () => {
     const { history } = renderWithRouter(<App />, ['/favorite-recipes']);
-    // act(() => history.push('meals/52977'));
-    // history.push(favoritePage);
     const { location: { pathname } } = history;
 
     expect(pathname).toBe(favoritePage);
 
     expect(screen.getAllByAltText(/recipe/i)).toHaveLength(2);
+    
+    const mealsFilterBtn = screen.getByRole('button', {  name: /meals/i});
+    expect (mealsFilterBtn).toBeInTheDocument();
+    
+    userEvent.click(mealsFilterBtn);
+    expect(screen.getAllByAltText(/recipe/i)).toHaveLength(1);
+    
+    const mealRecipe = screen.getByRole('heading', {  name: /corba/i});
+    expect(mealRecipe).toBeInTheDocument();
+    
+    const drinkFilterBtn = screen.getByRole('button', {  name: /drinks/i});
+    expect(drinkFilterBtn).toBeInTheDocument();
+    
+    userEvent.click(drinkFilterBtn);
+    expect(screen.getAllByAltText(/recipe/i)).toHaveLength(1);
+    
+    const drinkRecipe = screen.getByRole('heading', {  name: /gg/i});
+    expect(drinkRecipe).toBeInTheDocument();
 
-    // const favoriteBtn = screen.getByRole('img', { name: /favorite/i });
-    // expect(favoriteBtn).toBeInTheDocument();
-    // userEvent.click(favoriteBtn);
-
-    // // act(() => history.push('favorite-recipes'));
-    // history.push(favoritePage);
-    // const recipeTitle = screen.getByText(/corba/i);
-    // expect(recipeTitle).toBeInTheDocument();
-    // const shareBtn = await screen.findByTestId('0-horizontal-share-btn');
-    // expect(shareBtn).toBeInTheDocument();
-
-    // const removeFavoriteBtn = screen.getByRole('img', { name: /favorite/i });
-    // expect(removeFavoriteBtn).toBeInTheDocument();
-
-    // const filterMeals = screen.getByRole('button', { name: /meals/i });
-    // expect(filterMeals).toBeInTheDocument();
-
-    // // userEvent.click(shareBtn);
-    // userEvent.click(removeFavoriteBtn);
-
-    // expect(recipeTitle).not.toBeInTheDocument();
-
-    // const copyedText = screen.getByText(/link copied!/i);
-    // expect(copyedText).toBeInTheDocument();
+    const allFilterBtn = screen.getByRole('button', {  name: /all/i})
+    expect(allFilterBtn).toBeInTheDocument();
+    
+    userEvent.click(allFilterBtn);
+    expect(screen.getAllByAltText(/recipe/i)).toHaveLength(2);
   });
-
-  it('adiciona uma receita drink aos favoritos', async () => {
-    const { history } = renderWithRouter(<App />);
-    // act(() => history.push('drinks/15997'));
-    history.push('/drinks/15997');
-
-    expect(await screen.findByRole('img', { name: /recipe/i })).toBeInTheDocument();
-
-    const favoriteBtn = screen.getByRole('img', { name: /favorite/i });
-    expect(favoriteBtn).toBeInTheDocument();
-    userEvent.click(favoriteBtn);
-
-    // act(() => history.push('favorite-recipes'));
-    history.push(favoritePage);
-    const recipeTitle = await screen.findByText(/gg/i);
-    expect(recipeTitle).toBeInTheDocument();
-    const shareBtn = await screen.findByTestId('0-horizontal-share-btn');
+  
+  it('testa botao de compartilhar e botao remover favorito', () => {
+    const { history } = renderWithRouter(<App />, ['/favorite-recipes']);
+    const { location: { pathname } } = history;
+    expect(pathname).toBe(favoritePage);
+    
+    const shareBtn = screen.getByTestId('0-horizontal-share-btn');
     expect(shareBtn).toBeInTheDocument();
-
-    const removeFavoriteBtn = screen.getByRole('img', { name: /favorite/i });
-    expect(removeFavoriteBtn).toBeInTheDocument();
-
+    // o click abaixo quebra o teste pq nao consegue exacutar a funcao copy da API clipboard
+    // necessario fazer um mock.fn
     // userEvent.click(shareBtn);
-    userEvent.click(removeFavoriteBtn);
 
-    expect(recipeTitle).not.toBeInTheDocument();
+    const removeFavoriteBtn = screen.getAllByRole('img', { name: /favorite/i });
+    expect(removeFavoriteBtn).toHaveLength(2);
+    userEvent.click(removeFavoriteBtn[0])
 
-    // const copyedText = screen.getByText(/link copied!/i);
-    // expect(copyedText).toBeInTheDocument();
-  });
-
-  it('testa filtro das receitas em favoritos', async () => {
-    const { history } = renderWithRouter(<App />);
-    // act(() => history.push('meals/52977'));
-    history.push('/meals/52977');
-
-    expect(await screen.findByRole('img', { name: /recipe/i })).toBeInTheDocument();
-
-    const favoriteBtn1 = screen.getByRole('img', { name: /favorite/i });
-    expect(favoriteBtn1).toBeInTheDocument();
-    userEvent.click(favoriteBtn1);
-
-    history.push('/drinks/15997');
-
-    expect(await screen.findByRole('img', { name: /recipe/i })).toBeInTheDocument();
-
-    const favoriteBtn2 = screen.getByRole('img', { name: /favorite/i });
-    expect(favoriteBtn2).toBeInTheDocument();
-    userEvent.click(favoriteBtn2);
-
-    // act(() => history.push('favorite-recipes'));
-    history.push(favoritePage);
-    const recipeTitle = screen.getByText(/corba/i);
-    expect(recipeTitle).toBeInTheDocument();
-    // const shareBtn = await screen.findByTestId('1-horizontal-share-btn');
-    const shareBtn = screen.findAllByRole('img', { name: /shareBtn/i });
-    expect(shareBtn[0]).toBeInTheDocument();
-
-    const removeFavoriteBtn = screen.getByRole('img', { name: /favorite/i });
-    expect(removeFavoriteBtn).toBeInTheDocument();
-
-    const filterMeals = screen.getByRole('button', { name: /meals/i });
-    expect(filterMeals).toBeInTheDocument();
-
-    // userEvent.click(shareBtn);
-    userEvent.click(removeFavoriteBtn);
-
-    expect(recipeTitle).not.toBeInTheDocument();
-
-    // const copyedText = screen.getByText(/link copied!/i);
-    // expect(copyedText).toBeInTheDocument();
+    expect(screen.getAllByAltText(/recipe/i)).toHaveLength(1);
   });
 });
