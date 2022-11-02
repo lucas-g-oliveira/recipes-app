@@ -74,14 +74,23 @@ describe('Verifica a cobertura de testes em "DoneRecipies"', () => {
   });
 
   it('testa botao de compartilhar', () => {
+    window.document.execCommand = jest.fn(() => true);
     const { history } = renderWithRouter(<App />, [donePage]);
     const { location: { pathname } } = history;
     expect(pathname).toBe(donePage);
 
     const shareBtn = screen.getByTestId('0-horizontal-share-btn');
     expect(shareBtn).toBeInTheDocument();
-    // o click abaixo quebra o teste pq nao consegue exacutar a funcao copy da API clipboard
-    // necessario fazer um mock.fn
-    // userEvent.click(shareBtn);
+    userEvent.click(shareBtn);
+
+    const copyedText = screen.getByText(/link copied!/i);
+    expect(copyedText).toBeInTheDocument();
+
+    const copyedOkBtn = screen.getByRole('button', { name: /ok/i });
+    expect(copyedOkBtn).toBeInTheDocument();
+
+    userEvent.click(copyedOkBtn);
+    expect(copyedText).not.toBeInTheDocument();
+    expect(copyedOkBtn).not.toBeInTheDocument();
   });
 });
