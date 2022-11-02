@@ -1,5 +1,5 @@
 import React from 'react';
-import { screen } from "@testing-library/react";
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import renderWithRouter from '../helpers/renderWithRouter';
 import App from '../App';
@@ -37,46 +37,47 @@ afterEach(() => {
   localStorage.removeItem('doneRecipes');
 });
 
+const donePage = '/done-recipes';
 
 describe('Verifica a cobertura de testes em "DoneRecipies"', () => {
   it('checa filtros por tipo de receita', () => {
-    const { history } = renderWithRouter(<App />, ['/done-recipes']);
+    const { history } = renderWithRouter(<App />, [donePage]);
     const { location: { pathname } } = history;
 
-    expect(pathname).toBe('/done-recipes');
+    expect(pathname).toBe(donePage);
 
     expect(screen.getAllByAltText(/recipe/i)).toHaveLength(2);
-    
-    const mealsFilterBtn = screen.getByRole('button', {  name: /meals/i});
-    expect (mealsFilterBtn).toBeInTheDocument();
-    
+
+    const mealsFilterBtn = screen.getByRole('button', { name: /meals/i });
+    expect(mealsFilterBtn).toBeInTheDocument();
+
     userEvent.click(mealsFilterBtn);
     expect(screen.getAllByAltText(/recipe/i)).toHaveLength(1);
-    
-    const mealRecipe = screen.getByRole('heading', {  name: /arrabiata/i});
+
+    const mealRecipe = screen.getByRole('heading', { name: /arrabiata/i });
     expect(mealRecipe).toBeInTheDocument();
-    
-    const drinkFilterBtn = screen.getByRole('button', {  name: /drinks/i});
+
+    const drinkFilterBtn = screen.getByRole('button', { name: /drinks/i });
     expect(drinkFilterBtn).toBeInTheDocument();
-    
+
     userEvent.click(drinkFilterBtn);
     expect(screen.getAllByAltText(/recipe/i)).toHaveLength(1);
-    
-    const drinkRecipe = screen.getByRole('heading', {  name: /aquamarine/i});
+
+    const drinkRecipe = screen.getByRole('heading', { name: /aquamarine/i });
     expect(drinkRecipe).toBeInTheDocument();
 
-    const allFilterBtn = screen.getByRole('button', {  name: /all/i})
+    const allFilterBtn = screen.getByRole('button', { name: /all/i });
     expect(allFilterBtn).toBeInTheDocument();
-    
+
     userEvent.click(allFilterBtn);
     expect(screen.getAllByAltText(/recipe/i)).toHaveLength(2);
   });
 
   it('testa botao de compartilhar', () => {
-    const { history } = renderWithRouter(<App />, ['/done-recipes']);
+    const { history } = renderWithRouter(<App />, [donePage]);
     const { location: { pathname } } = history;
-    expect(pathname).toBe('/done-recipes');
-    
+    expect(pathname).toBe(donePage);
+
     const shareBtn = screen.getByTestId('0-horizontal-share-btn');
     expect(shareBtn).toBeInTheDocument();
     // o click abaixo quebra o teste pq nao consegue exacutar a funcao copy da API clipboard
