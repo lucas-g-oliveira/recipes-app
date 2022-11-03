@@ -11,4 +11,13 @@ export const saveInProgressRecipe = (update) => {
 };
 
 export const getInProgressRecipe = () => JSON.parse(localStorage
-  .getItem('inProgressRecipes'));
+  .getItem('inProgressRecipes')) ?? { meals: {}, drinks: {} };
+
+export const addProgressToRecipe = (page, recipeId) => {
+  const updateProgress = getInProgressRecipe();
+  const test = JSON.stringify(updateProgress).includes(recipeId);
+  if (!test) {
+    updateProgress[page][recipeId] = [];
+    saveInProgressRecipe(updateProgress);
+  }
+};
