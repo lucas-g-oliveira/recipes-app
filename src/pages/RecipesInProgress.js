@@ -27,13 +27,19 @@ export default function RecipesInProgress() {
 
   // essa funcao salva apenas o id da receita no localStorage na chave inProgressRecipes.
   // refatorado no requisito 40
-  const addProgressToRecipe = () => {
-    const updateProgress = getInProgressRecipe();
-    //  aqui abaixo tá quebrando
-    const test = JSON.stringify(updateProgress);
-    if (!test.includes(id)) {
-      const page = (pathname.includes('meals')) ? 'meals' : 'drinks';
-      updateProgress[page][id] = [];
+  const addProgressToRecipe = (page, recipeId) => {
+    let updateProgress = getInProgressRecipe();
+    const test = (JSON.stringify(updateProgress).includes(recipeId)) ?? false;
+    if (!test) {
+      updateProgress[page][recipeId] = [];
+      const newId = { [id]: [] };
+      updateProgress = {
+        ...updateProgress,
+        [page]: {
+          ...[page],
+          [recipeId]: [...updateProgress.page, recipeId],
+        },
+      };
     }
     saveInProgressRecipe(updateProgress);
   };
@@ -65,7 +71,7 @@ export default function RecipesInProgress() {
 
   // console.log(selectedRecipe);
   // console.log(isActive, 'is');
-  // console.log(ingredChecked);
+  console.log(ingredChecked);
   useEffect(() => {
     const fetchDetail = async () => {
       const detailsMealsEndPoint = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
@@ -79,10 +85,9 @@ export default function RecipesInProgress() {
         response = await fetch(detailsDrinksEndPoint);
         key = 'drinks';
       }
-      addProgressToRecipe();
+      addProgressToRecipe(key, id);
       const data = await response.json();
       const ingredientsStorage = getInProgressRecipe();
-      console.log(ingredientsStorage);
       setIngredChecked(ingredientsStorage[key][id]);
       setSelectedRecipe(data[key]);
       getRecipeIngredients(data[key]);
