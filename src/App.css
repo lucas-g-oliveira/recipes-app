@@ -1,5 +1,78 @@
-.meals {
+.backGround {
+  background-image: url('./images/Background-PhotoRoom.png');
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: center;
+}
+
+.header {
   align-items: center;
+  align-self: start;
+  background: rgb(14, 196, 165);
+  display: flex;
+  flex-direction: line;
+  gap: 20px;
+  height: 60px;
+  position: fixed;
+}
+
+.lupa {
+  background: rgb(14, 196, 165);
+  border: 2px solid black;
+  height: 100%;
+}
+
+.buttonEntrar {
+  background: rgb(52, 166, 126);
+  border: none;
+  border-radius: 10px;
+  color: rgb(52, 55, 58);
+  height: 50px;
+}
+
+.filterButon {
+  width: 100%;
+}
+
+.filter-buton {
+  display: flex;
+  justify-content: space-evenly;
+  background-color: black;
+}
+
+.img-recipes{
+  background-color: ;
+}
+
+/* stylelint-disable-next-line selector-max-specificity */
+#input-email, #input-senha {
+  border: none;
+  border-radius: 10px;
+  height: 40px;
+}
+
+.buttonFilter {
+  background: rgb(52, 166, 126);
+  border: none;
+  border-radius: 1px;
+  color: black;
+  height: 40px;
+  margin: 1px;
+  width: 100%;
+}
+
+.img-recipes {
+  width: 100%;
+}
+
+.buttonFilter:hover {
+  background: rgb(45, 116, 100);
+  color: rgb(48, 211, 121);
+}
+
+.meals {
   background: #0fa36b;
   color: #464646;
   display: flex;
@@ -8,6 +81,17 @@
   height: 100vh;
   justify-content: center;
   width: 100%;
+}
+
+.container {
+  align-content: center;
+  color: aquamarine;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 350px;
+  justify-content: space-evenly;
+  text-align: center;
 }
 
 .rocksGlass {

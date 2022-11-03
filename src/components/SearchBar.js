@@ -6,7 +6,7 @@ function SearchBar() {
   const { handleSearchChange, handleClickApi } = useContext(AppContext);
   const { location: { pathname } } = useHistory();
   return (
-    <div>
+    <div className="searchBar">
       <input
         data-testid="search-input"
         type="text"

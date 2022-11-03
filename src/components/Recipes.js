@@ -44,26 +44,29 @@ function Recipes() {
   return (
     <div>
       <div>
-        {
-          categories.map((a) => (
+        <div className="filter-buton">
+          {categories.map((a) => (
             <input
               key={ a.strCategory }
               type="button"
               value={ a.strCategory }
+              className="buttonFilter"
               data-testid={ `${a.strCategory}-category-filter` }
               onClick={ () => handleClickToggle(pathname, a.strCategory) }
             />
-          ))
-        }
-        <input
-          value="All"
-          type="button"
-          onClick={ () => resetFilter(pathname) }
-          data-testid="All-category-filter"
-        />
+          ))}
+          <input
+            value="All"
+            type="button"
+            className="buttonFilter"
+            onClick={ () => resetFilter(pathname) }
+            data-testid="All-category-filter"
+          />
+        </div>
         {
           resultsMap.map((result, index) => (
             <div
+              className="card-recipe"
               data-testid={ `${index}-recipe-card` }
               key={ result.idMeal ? result.idMeal : result.idDrink }
             >
@@ -72,6 +75,7 @@ function Recipes() {
               >
                 <div>
                   <img
+                    className="img-recipes"
                     data-testid={ `${index}-card-img` }
                     src={ result.strMealThumb
                       ? result.strMealThumb

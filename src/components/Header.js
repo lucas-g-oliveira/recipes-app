@@ -14,13 +14,13 @@ function Header() {
   const pageTitle = pathname.replace('/', '').replace('-', ' ').split(' ');
 
   return (
-    <header>
+    <header className="header">
       <Link to="/profile">
         <img src={ profileIcon } alt="profile" data-testid="profile-top-btn" />
       </Link>
       {
         (pathname === '/drinks' || pathname === '/meals') && (
-          <button type="button" onClick={ showsearchBtn }>
+          <button type="button" onClick={ showsearchBtn } className="lupa">
             <img src={ searchIcon } alt="seacrh" data-testid="search-top-btn" />
           </button>
         )
