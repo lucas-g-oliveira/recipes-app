@@ -9,7 +9,7 @@ import {
   addProgressToRecipe,
 } from '../services/inProgressStorage';
 
-function RecipesInProgress() {
+function RecipeInProgress() {
   const { location: { pathname } } = useHistory();
   const { setSelectedRecipe,
     selectedRecipe,
@@ -176,4 +176,4 @@ function RecipesInProgress() {
   );
 }
 
-export default RecipesInProgress;
+export default RecipeInProgress;

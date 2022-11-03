@@ -11,7 +11,7 @@ import DoneRecipes from './pages/DoneRecipes';
 /* import MealDetails from './pages/MealDetails';
 import DrinksDetails from './pages/DrinksDetails'; */
 import RecipeDetails from './components/RecipeDetails';
-import RecipesInProgress from './pages/RecipesInProgress';
+import RecipesInProgress from './pages/RecipeInProgress';
 
 function App() {
   return (
