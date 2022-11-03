@@ -10,24 +10,18 @@ function StartRecipeBtn() {
 
   const [done, setGetDone] = useState([]);
   const [hasDone, setHasDone] = useState(false);
-  // const [inProgress, setInProgress] = useState([]);
   const [hasProgress, setHasProgress] = useState(false);
-  console.log('done', done);
 
   const updateRecipeProgress = useCallback(() => {
     const updateProgress = getInProgressRecipe();
-    if (updateProgress !== null) {
-      // setInProgress(updateProgress);
-      console.log(updateProgress);
-      if (updateProgress[page][recipeId]) {
-        const started = true;
-        setHasProgress(started);
-      }
+    if (updateProgress !== null && updateProgress[page][recipeId]) {
+      const started = true;
+      setHasProgress(started);
     }
 
     const updateDoneRecipes = getDoneRecipes();
     if (updateDoneRecipes !== null) {
-      setGetDone(updateProgress);
+      setGetDone(updateDoneRecipes);
       const finished = updateDoneRecipes.some((recipe) => recipe.id === recipeId);
       console.log('finished', finished);
       setHasDone(finished);
@@ -47,7 +41,6 @@ function StartRecipeBtn() {
               className="startRecipeBtn"
               type="button"
               data-testid="start-recipe-btn"
-              // onClick={ () => addProgressToRecipe() }
             >
               Start Recipe
             </button>
@@ -66,6 +59,10 @@ function StartRecipeBtn() {
             </button>
           </Link>
         )
+      }
+      {
+        done.some((recipe) => recipe.id === recipeId)
+          && <Link to={ `/${page}` }>Recipe Already Done</Link>
       }
     </div>
   );

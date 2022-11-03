@@ -15,8 +15,11 @@ function ShareAndFavorite() {
   const [hasCopy, setHasCopy] = useState(false);
   const [hasFavorite, setHasFavorite] = useState(false);
 
+  const inProgressUrl = '/in-progress';
+
   const getCopiedLink = () => {
-    copy(`http://localhost:3000${pathname}`);
+    const adjustedPathname = pathname.replace(inProgressUrl, '');
+    copy(`http://localhost:3000${adjustedPathname}`);
     setHasCopy(true);
   };
 
@@ -65,9 +68,9 @@ function ShareAndFavorite() {
     let recipeId;
 
     if (pageType) {
-      recipeId = pathname.replace('/meals/', '');
+      recipeId = pathname.replace('/meals/', '').replace(inProgressUrl, '');
     } else {
-      recipeId = pathname.replace('/drinks/', '');
+      recipeId = pathname.replace('/drinks/', '').replace(inProgressUrl, '');
     }
 
     setHasFavorite(false);
@@ -95,7 +98,7 @@ function ShareAndFavorite() {
       <button
         type="button"
         onClick={ saveFavoriteRecipe }
-        src={ hasFavorite ? blackHeartIcon : whiteHeartIcon }
+        // src={ hasFavorite ? blackHeartIcon : whiteHeartIcon }
       >
         {
           hasFavorite
