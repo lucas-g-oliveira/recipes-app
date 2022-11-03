@@ -116,6 +116,7 @@ function FavoriteRecipes() {
               src={ shareIcon }
               alt="shareBtn"
               data-testid={ `${index}-horizontal-share-btn` }
+              width="30px"
             />
           </button>
 
