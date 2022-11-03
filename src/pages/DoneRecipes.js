@@ -70,7 +70,7 @@ function DoneRecipes() {
           Drinks
         </button>
       </div>
-      { filteredDoneRecipes.length === 0 && <p>No Recipe has been done yet...</p>}
+      { filteredDoneRecipes.length === 0 && <p>No recipe has been done yet...</p>}
       {(filteredDoneRecipes.length > 0) && filteredDoneRecipes.map((e, index) => (
         <div key={ e.id }>
           <Link to={ `/${e.type}s/${e.id}` }>

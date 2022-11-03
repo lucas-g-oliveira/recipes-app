@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Redirect, useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import AppContext from '../contextApi/AppContext';
 import ShareAndFavorite from '../components/ShareAndFavorite';
-import { saveDoneRecipe, getDoneRecipes } from '../services/doneStorage';
 import {
   getInProgressRecipe,
   saveInProgressRecipe,
   addProgressToRecipe } from '../services/inProgressStorage';
+import DoneRecipeBtn from '../components/DoneRecipeBtn';
 
 function RecipesInProgress() {
   const { location: { pathname } } = useHistory();
@@ -19,7 +19,6 @@ function RecipesInProgress() {
     measures } = useContext(AppContext);
 
   const [ingredChecked, setIngredChecked] = useState([]);
-  const [isDone, setIsDone] = useState(false);
   const [currPage, setCurrPage] = useState('');
   const getyoutubeParam = 32;
 
@@ -40,42 +39,6 @@ function RecipesInProgress() {
 
   const handleClick = ({ target: { name } }) => {
     setListIngredientStorage(id, name);
-  };
-
-  const saveDoneRecipes = () => {
-    const allDone = getDoneRecipes();
-
-    const recipe = {
-      id: selectedRecipe[0].idMeal ? selectedRecipe[0].idMeal : selectedRecipe[0].idDrink,
-      type: selectedRecipe[0].idMeal ? 'meal' : 'drink',
-      nationality: selectedRecipe[0].strArea
-        ? selectedRecipe[0].strArea
-        : '',
-      category: selectedRecipe[0].strCategory,
-      alcoholicOrNot: selectedRecipe[0].strAlcoholic
-        ? selectedRecipe[0].strAlcoholic
-        : '',
-      name: selectedRecipe[0].strMeal
-        ? selectedRecipe[0].strMeal
-        : selectedRecipe[0].strDrink,
-      image: selectedRecipe[0].strMealThumb
-        ? selectedRecipe[0].strMealThumb
-        : selectedRecipe[0].strDrinkThumb,
-      doneDate: new Date().toISOString(),
-      tags: selectedRecipe[0].strMeal
-        ? selectedRecipe[0].strTags.split(',')
-        : [],
-    };
-
-    let updateAllDone;
-
-    if (allDone !== null) {
-      updateAllDone = [...allDone, recipe];
-    } else {
-      updateAllDone = [recipe];
-    }
-    saveDoneRecipe(updateAllDone);
-    setIsDone(true);
   };
 
   useEffect(() => {
@@ -104,14 +67,13 @@ function RecipesInProgress() {
     };
     fetchDetail();
   }, [pathname,
-    isDone,
     setIngredChecked,
     setSelectedRecipe,
     getRecipeIngredients,
     getRecipeIngredientsMeasures,
     id]);
 
-  return isDone ? (<Redirect to="/done-recipes" />) : (
+  return (
     <div>
       <h3>In Progress</h3>
       <ShareAndFavorite />
@@ -134,7 +96,6 @@ function RecipesInProgress() {
               { recipe.strAlcoholic
                 ? `${recipe.strCategory} ${recipe.strAlcoholic}`
                 : recipe.strCategory}
-              {/* {`${recipe.strCategory} ${recipe.strAlcoholic}`} */}
             </p>
           </div>
         ))
@@ -190,14 +151,7 @@ function RecipesInProgress() {
           <p data-testid="instructions">{selectedRecipe[0].strInstructions}</p>
         )
       }
-      <button
-        type="button"
-        onClick={ saveDoneRecipes }
-        disabled={ ingredients.length !== ingredChecked.length }
-        data-testid="finish-recipe-btn"
-      >
-        Finalizar Receita
-      </button>
+      <DoneRecipeBtn ingredChecked={ ingredChecked } />
     </div>
   );
 }
