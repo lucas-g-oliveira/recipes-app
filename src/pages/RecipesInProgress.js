@@ -6,7 +6,8 @@ import { saveDoneRecipe } from '../services/doneStorage';
 import {
   getInProgressRecipe,
   saveInProgressRecipe,
-  addProgressToRecipe } from '../services/inProgressStorage';
+  addProgressToRecipe,
+} from '../services/inProgressStorage';
 
 function RecipesInProgress() {
   const { location: { pathname } } = useHistory();
