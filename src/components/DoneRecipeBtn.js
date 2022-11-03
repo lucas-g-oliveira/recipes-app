@@ -6,7 +6,6 @@ import { saveDoneRecipe, getDoneRecipes } from '../services/doneStorage';
 
 function DoneRecipeBtn(props) {
   const { ingredChecked } = props;
-  console.log(typeof ingredChecked);
   const { selectedRecipe, ingredients } = useContext(AppContext);
   const [isDone, setIsDone] = useState(false);
 
