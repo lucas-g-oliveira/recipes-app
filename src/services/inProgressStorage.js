@@ -1,5 +1,5 @@
-export const saveInProgressRecipe = (recipesArray) => {
-  localStorage.setItem('inProgressRecipes', JSON.stringify(recipesArray));
+export const saveInProgressRecipe = (update) => {
+  localStorage.setItem('inProgressRecipes', JSON.stringify(update));
   // localStorage.setItem('inProgressRecipes', JSON.stringify({
   //   drinks: {
   //     idDrink: ['lista - de - ingredientes - utilizados'],

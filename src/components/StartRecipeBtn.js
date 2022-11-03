@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useHistory, useParams, Link } from 'react-router-dom';
-import { getInProgressRecipe, saveInProgressRecipe } from '../services/inProgressStorage';
+import { getInProgressRecipe } from '../services/inProgressStorage';
 import { getDoneRecipes } from '../services/doneStorage';
 
 function StartRecipeBtn() {
@@ -10,16 +10,17 @@ function StartRecipeBtn() {
 
   const [done, setGetDone] = useState([]);
   const [hasDone, setHasDone] = useState(false);
-  const [inProgress, setInProgress] = useState([]);
+  // const [inProgress, setInProgress] = useState([]);
   const [hasProgress, setHasProgress] = useState(false);
   console.log('done', done);
 
   const updateRecipeProgress = useCallback(() => {
     const updateProgress = getInProgressRecipe();
     if (updateProgress !== null) {
-      setInProgress(updateProgress);
-      if (updateProgress[page] && updateProgress[page].length > 0) {
-        const started = updateProgress[page].some((id) => id === recipeId);
+      // setInProgress(updateProgress);
+      console.log(updateProgress);
+      if (updateProgress[page][recipeId]) {
+        const started = true;
         setHasProgress(started);
       }
     }
@@ -32,21 +33,6 @@ function StartRecipeBtn() {
       setHasDone(finished);
     }
   }, [page, recipeId]);
-
-  // essa funcao salva apenas o id da receita no localStorage na chave inProgressRecipes.
-  // refatorar no requisito 40
-  const addProgressToRecipe = () => {
-    let updateProgress;
-    if (inProgress[page]) {
-      updateProgress = {
-        ...inProgress,
-        [page]: [...inProgress[page], recipeId],
-      };
-    } else {
-      updateProgress = { ...inProgress, [page]: [recipeId] };
-    }
-    saveInProgressRecipe(updateProgress);
-  };
 
   useEffect(() => {
     updateRecipeProgress();
@@ -61,7 +47,7 @@ function StartRecipeBtn() {
               className="startRecipeBtn"
               type="button"
               data-testid="start-recipe-btn"
-              onClick={ () => addProgressToRecipe() }
+              // onClick={ () => addProgressToRecipe() }
             >
               Start Recipe
             </button>
