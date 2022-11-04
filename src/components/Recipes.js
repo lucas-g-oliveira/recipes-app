@@ -63,35 +63,38 @@ function Recipes() {
             data-testid="All-category-filter"
           />
         </div>
-        {
-          resultsMap.map((result, index) => (
-            <div
-              className="card-recipe"
-              data-testid={ `${index}-recipe-card` }
-              key={ result.idMeal ? result.idMeal : result.idDrink }
-            >
-              <Link
-                to={ `${pathname}/${result.idMeal ? result.idMeal : result.idDrink}` }
+        <div className="receitas">
+          {
+            resultsMap.map((result, index) => (
+              <div
+                className="card-recipe"
+                data-testid={ `${index}-recipe-card` }
+                key={ result.idMeal ? result.idMeal : result.idDrink }
               >
-                <div>
-                  <img
-                    className="img-recipes"
-                    data-testid={ `${index}-card-img` }
-                    src={ result.strMealThumb
-                      ? result.strMealThumb
-                      : result.strDrinkThumb }
-                    alt={ result.strMeal ? result.strMeal : result.strDrink }
-                  />
-                  <p
-                    data-testid={ `${index}-card-name` }
-                  >
-                    {result.strMeal ? result.strMeal : result.strDrink}
-                  </p>
-                </div>
-              </Link>
-            </div>
-          ))
-        }
+                <Link
+                  to={ `${pathname}/${result.idMeal ? result.idMeal : result.idDrink}` }
+                >
+                  <div>
+                    <img
+                      className="img-recipes"
+                      data-testid={ `${index}-card-img` }
+                      src={ result.strMealThumb
+                        ? result.strMealThumb
+                        : result.strDrinkThumb }
+                      alt={ result.strMeal ? result.strMeal : result.strDrink }
+                    />
+                    <p
+                      className="recipe-name"
+                      data-testid={ `${index}-card-name` }
+                    >
+                      {result.strMeal ? result.strMeal : result.strDrink}
+                    </p>
+                  </div>
+                </Link>
+              </div>
+            ))
+          }
+        </div>
       </div>
     </div>
   );

@@ -130,6 +130,7 @@ function RecipesInProgress() {
       }
 
       <h3>Ingredients:</h3>
+
       {
         ingredients.map((ingredient, index) => (
           <div
@@ -154,7 +155,7 @@ function RecipesInProgress() {
         ))
       }
 
-      <h3>Intructions:</h3>
+      <h3 className="titulo">Intructions:</h3>
       {
         selectedRecipe.length > 0 && (
           <p data-testid="instructions">{selectedRecipe[0].strInstructions}</p>
