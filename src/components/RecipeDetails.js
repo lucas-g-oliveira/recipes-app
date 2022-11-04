@@ -1,22 +1,17 @@
 import React, { useContext, useEffect } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import AppContext from '../contextApi/AppContext';
 import '../App.css';
 import 'bootstrap/dist/css/bootstrap.css';
-// import { getInProgressRecipe, saveInProgressRecipe } from '../services/inProgressStorage';
-// import { getDoneRecipes } from '../services/doneStorage';
 import ShareAndFavorite from './ShareAndFavorite';
 import StartRecipeBtn from './StartRecipeBtn';
 
 function RecipesDetails() {
   const { location: { pathname } } = useHistory();
-  const params = useParams();
-  console.log(params);
   const { setSelectedRecipe,
     selectedRecipe,
     setSuggestions,
     suggestions,
-    // setStartedRecipe,
     getRecipeIngredients,
     ingredients,
     getRecipeIngredientsMeasures,
@@ -27,16 +22,6 @@ function RecipesDetails() {
 
   const idOfMeal = pathname.replace('/meals/', '');
   const idOfDrink = pathname.replace('/drinks/', '');
-
-  // const [done, setGetDone] = useState([]);
-  // const [inProgress, setInProgress] = useState([]);
-
-  // useEffect(() => {
-  //   setGetDone(() => getDoneRecipes());
-  //   setInProgress(() => saveInProgressRecipe());
-  //   setInProgress(() => getInProgressRecipe());
-  //   console.log(inProgress);
-  // }, []);
 
   const getyoutubeParam = 32;
 

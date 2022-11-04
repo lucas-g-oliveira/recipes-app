@@ -1,15 +1,18 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Redirect, useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import AppContext from '../contextApi/AppContext';
 import ShareAndFavorite from '../components/ShareAndFavorite';
-import { saveDoneRecipe } from '../services/doneStorage';
 import {
   getInProgressRecipe,
   saveInProgressRecipe,
-  addProgressToRecipe } from '../services/inProgressStorage';
+  addProgressToRecipe,
+} from '../services/inProgressStorage';
+import DoneRecipeBtn from '../components/DoneRecipeBtn';
 
 function RecipeInProgress() {
   const { location: { pathname } } = useHistory();
+  const { id } = useParams();
+
   const { setSelectedRecipe,
     selectedRecipe,
     getRecipeIngredients,
@@ -17,16 +20,10 @@ function RecipeInProgress() {
     getRecipeIngredientsMeasures,
     measures } = useContext(AppContext);
 
-  // const [isActive, setIsActive] = useState(false);
   const [ingredChecked, setIngredChecked] = useState([]);
-  const [isDone, setIsDone] = useState(false);
   const [currPage, setCurrPage] = useState('');
-  const { id } = useParams();
+  const getyoutubeParam = 32;
 
-  // const verificaIngrediente = (ingrendient) => ingredChecked.includes(ingrendient);
-
-  // essa funcao salva apenas o id da receita no localStorage na chave inProgressRecipes.
-  // refatorado no requisito 40
 
   const setListIngredientStorage = (idRecipe, ingrendient) => {
     const objLocalSt = getInProgressRecipe();
@@ -43,13 +40,10 @@ function RecipeInProgress() {
     saveInProgressRecipe(objLocalSt);
   };
 
-  // const ternaryTest = (ifTrue, ifFalse) => ifTrue ?? ifFalse;
-
   const handleClick = ({ target: { name } }) => {
     setListIngredientStorage(id, name);
   };
 
-  const getyoutubeParam = 32;
   useEffect(() => {
     const fetchDetail = async () => {
       const detailsMealsEndPoint = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
@@ -76,16 +70,16 @@ function RecipeInProgress() {
     };
     fetchDetail();
   }, [pathname,
-    isDone,
     setIngredChecked,
     setSelectedRecipe,
     getRecipeIngredients,
     getRecipeIngredientsMeasures,
     id]);
 
-  return isDone ? (<Redirect to="/done-recipes" />) : (
+  return (
     <div>
-      <h3>IN PROGRESS</h3>
+      <h3>In Progress</h3>
+
       <ShareAndFavorite />
       {
         selectedRecipe.map((recipe) => (
@@ -103,8 +97,10 @@ function RecipeInProgress() {
               width="300px"
             />
             <p data-testid="recipe-category">
-              {/* { recipe.strAlcoholic ? `${recipe.strCategory} ${recipe.strAlcoholic}` : recipe.strCategory} */}
-              {`${recipe.strCategory} ${recipe.strAlcoholic}`}
+              { recipe.strAlcoholic
+                ? `${recipe.strCategory} ${recipe.strAlcoholic}`
+                : recipe.strCategory}
+
             </p>
           </div>
         ))
@@ -120,17 +116,17 @@ function RecipeInProgress() {
             title="YouTube video player"
             frameBorder="0"
             allow="accelerometer;
-  clipboard-write;
-  encrypted-media;
-  gyroscope;
-  picture-in-picture"
+              clipboard-write;
+              encrypted-media;
+              gyroscope;
+              picture-in-picture"
+
             allowFullScreen
           />
         )
       }
 
       <h3>Ingredients:</h3>
-
       {
         ingredients.map((ingredient, index) => (
           <div
@@ -139,10 +135,9 @@ function RecipeInProgress() {
           >
             <label
               htmlFor={ `${index}-ingredient` }
-              data-testid={ `${index}-ingredient-step` }
-              className={ ingredChecked.includes(ingredient) && 'checked' }
+              data-testid={ `${index}-ingredient-step` 
+              className={ ingredChecked.includes(ingredient) ? 'checked' : '' }
             >
-              {`${ingredient}: ${measures[index]}`}
               <input
                 type="checkbox"
                 name={ ingredient }
@@ -150,28 +145,19 @@ function RecipeInProgress() {
                 onChange={ handleClick }
                 checked={ ingredChecked.includes(ingredient) }
               />
+
+              {`${ingredient}: ${measures[index]}`}
             </label>
           </div>
         ))
       }
-
       <h3 className="titulo">Intructions:</h3>
       {
         selectedRecipe.length > 0 && (
           <p data-testid="instructions">{selectedRecipe[0].strInstructions}</p>
         )
       }
-      <button
-        type="button"
-        onClick={ () => {
-          saveDoneRecipe(selectedRecipe);
-          setIsDone(true);
-        } }
-        disabled={ ingredients.length !== ingredChecked.length }
-        data-testid="finish-recipe-btn"
-      >
-        Finalizar Receita
-      </button>
+      <DoneRecipeBtn ingredChecked={ ingredChecked } />
     </div>
   );
 }
