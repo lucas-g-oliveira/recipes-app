@@ -5,10 +5,11 @@ import ShareAndFavorite from '../components/ShareAndFavorite';
 import {
   getInProgressRecipe,
   saveInProgressRecipe,
-  addProgressToRecipe } from '../services/inProgressStorage';
+  addProgressToRecipe,
+} from '../services/inProgressStorage';
 import DoneRecipeBtn from '../components/DoneRecipeBtn';
 
-function RecipesInProgress() {
+function RecipeInProgress() {
   const { location: { pathname } } = useHistory();
   const { id } = useParams();
   const { setSelectedRecipe,
@@ -156,4 +157,4 @@ function RecipesInProgress() {
   );
 }
 
-export default RecipesInProgress;
+export default RecipeInProgress;
