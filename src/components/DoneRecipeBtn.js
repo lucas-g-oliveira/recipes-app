@@ -46,12 +46,13 @@ function DoneRecipeBtn(props) {
   };
 
   return (
-    <div>
+    <div className="marginBtn">
       {
         isDone ? (<Redirect to="/done-recipes" />) : (
 
           <button
             type="button"
+            className="startRecipeBtn"
             onClick={ saveDoneRecipes }
             disabled={ ingredients.length !== ingredChecked.length }
             data-testid="finish-recipe-btn"

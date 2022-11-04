@@ -15,18 +15,20 @@ function Header() {
 
   return (
     <header className="header">
+      {
+        searchBtn && <SearchBar />
+      }
+
       <Link to="/profile">
         <img src={ profileIcon } alt="profile" data-testid="profile-top-btn" />
       </Link>
+
       {
         (pathname === '/drinks' || pathname === '/meals') && (
           <button type="button" onClick={ showsearchBtn } className="lupa">
             <img src={ searchIcon } alt="seacrh" data-testid="search-top-btn" />
           </button>
         )
-      }
-      {
-        searchBtn && <SearchBar />
       }
 
       <h2 data-testid="page-title">

@@ -45,7 +45,7 @@ function DoneRecipes() {
   return (
     <div>
       <Header />
-      <div>
+      <div className="filter-btn-container">
         <button
           type="button"
           data-testid="filter-by-all-btn"
@@ -72,8 +72,14 @@ function DoneRecipes() {
       </div>
       { filteredDoneRecipes.length === 0 && <p>No recipe has been done yet...</p>}
       {(filteredDoneRecipes.length > 0) && filteredDoneRecipes.map((e, index) => (
-        <div key={ e.id }>
+        <div key={ e.id } className="simple-recipe-container">
           <Link to={ `/${e.type}s/${e.id}` }>
+            <h3
+              data-testid={ `${index}-horizontal-name` }
+              className="simple-recipe-title"
+            >
+              {e.name}
+            </h3>
             <img
               src={ e.image }
               data-testid={ `${index}-horizontal-image` }
@@ -81,6 +87,9 @@ function DoneRecipes() {
               width="300px"
             />
           </Link>
+
+          {/* <Link to={ `/${e.type}s/${e.id}` }>
+          </Link> */}
           {
             e.type === 'meal'
               ? (
@@ -94,11 +103,6 @@ function DoneRecipes() {
                 </h4>
               )
           }
-          <Link to={ `/${e.type}s/${e.id}` }>
-            <h3 data-testid={ `${index}-horizontal-name` }>
-              {e.name}
-            </h3>
-          </Link>
 
           <p data-testid={ `${index}-horizontal-done-date` }>
             {e.doneDate}

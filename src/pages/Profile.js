@@ -24,9 +24,9 @@ function Profile() {
     <div>
       <Header />
       <div className="profile">
-        <h3 data-testid="profile-email">
+        <h4 data-testid="profile-email" className="email-profile">
           {email}
-        </h3>
+        </h4>
         <button
           type="button"
           data-testid="profile-done-btn"

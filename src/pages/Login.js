@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { saveEmail } from '../services/userStorage';
+import logo from '../images/logoeasycooking.png';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -30,6 +31,7 @@ export default function Login() {
     /> : (
       <div className="backGround">
         <forms className="container">
+          <img className="login-img" src={ logo } alt="logo" width="200px" />
           <h1>Login</h1>
           <input
             name="email"
@@ -49,6 +51,7 @@ export default function Login() {
             value={ password }
             onChange={ (evento) => setPassword(evento.target.value) }
           />
+          <p />
           <button
             className="buttonEntrar"
             type="button"

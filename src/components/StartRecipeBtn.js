@@ -62,7 +62,7 @@ function StartRecipeBtn() {
       }
       {
         done.some((recipe) => recipe.id === recipeId)
-          && <Link to={ `/${page}` }>Recipe Already Done</Link>
+          && <Link to={ `/${page}` } className="startRecipeBtn">Recipe Already Done</Link>
       }
     </div>
   );

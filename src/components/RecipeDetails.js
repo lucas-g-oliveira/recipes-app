@@ -5,6 +5,7 @@ import '../App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import ShareAndFavorite from './ShareAndFavorite';
 import StartRecipeBtn from './StartRecipeBtn';
+import Header from './Header';
 
 function RecipesDetails() {
   const { location: { pathname } } = useHistory();
@@ -73,6 +74,7 @@ function RecipesDetails() {
 
   return (
     <div>
+      <Header />
       <div className="recipe-details">
         {
           selectedRecipe.map((recipe) => (

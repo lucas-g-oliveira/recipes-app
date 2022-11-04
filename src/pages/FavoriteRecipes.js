@@ -51,7 +51,7 @@ function FavoriteRecipes() {
   return (
     <div>
       <Header />
-      <div>
+      <div className="filter-btn-container">
         <button
           type="button"
           data-testid="filter-by-all-btn"
