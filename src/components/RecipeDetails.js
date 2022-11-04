@@ -73,8 +73,7 @@ function RecipesDetails() {
 
   return (
     <div>
-      <div>
-        <p>Recipes Details</p>
+      <div className="recipe-details">
         {
           selectedRecipe.map((recipe) => (
             <div key={ recipe.idMeal ? recipe.idMeal : recipe.idDrink }>
@@ -85,10 +84,11 @@ function RecipesDetails() {
               </h3>
               <ShareAndFavorite />
               <img
+                className="img-recipe-details"
                 src={ recipe.strMealThumb ? recipe.strMealThumb : recipe.strDrinkThumb }
                 alt="recipe"
                 data-testid="recipe-photo"
-                width="300px"
+                width="80%"
               />
               <p data-testid="recipe-category">
                 {
@@ -102,30 +102,38 @@ function RecipesDetails() {
         }
 
         <h3>Ingredients:</h3>
-        {
-          ingredients.map((ingredient, index) => (
-            <p
-              data-testid={ `${index}-ingredient-name-and-measure` }
-              key={ `${index}-${ingredient}` }
-            >
-              {`${ingredient}: ${measures[index]}`}
+        <div className="ingredients">
+          {
+            ingredients.map((ingredient, index) => (
+              <p
+                data-testid={ `${index}-ingredient-name-and-measure` }
+                key={ `${index}-${ingredient}` }
+              >
+                {`${ingredient}: ${measures[index]}`}
 
-            </p>
-          ))
-        }
+              </p>
+            ))
+          }
+        </div>
 
         <h3>Intructions:</h3>
         {
           selectedRecipe.length > 0 && (
-            <p data-testid="instructions">{selectedRecipe[0].strInstructions}</p>
+            <p
+              data-testid="instructions"
+              className="instructions"
+            >
+              {selectedRecipe[0].strInstructions}
+            </p>
           )
         }
 
         {
           (selectedRecipe.length > 0 && selectedRecipe[0].strYoutube) && (
             <iframe
+              className="movie-yt"
               data-testid="video"
-              width="560"
+              // width="560"
               height="315"
               src={ `https://www.youtube.com/embed/${selectedRecipe[0].strYoutube.slice(getyoutubeParam)}` }
               title="YouTube video player"

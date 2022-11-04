@@ -12,6 +12,7 @@ import DoneRecipeBtn from '../components/DoneRecipeBtn';
 function RecipeInProgress() {
   const { location: { pathname } } = useHistory();
   const { id } = useParams();
+
   const { setSelectedRecipe,
     selectedRecipe,
     getRecipeIngredients,
@@ -22,7 +23,6 @@ function RecipeInProgress() {
   const [ingredChecked, setIngredChecked] = useState([]);
   const [currPage, setCurrPage] = useState('');
   const getyoutubeParam = 32;
-
   const setListIngredientStorage = (idRecipe, ingrendient) => {
     const objLocalSt = getInProgressRecipe();
     const exist = objLocalSt[currPage][idRecipe].includes(ingrendient);
@@ -77,6 +77,7 @@ function RecipeInProgress() {
   return (
     <div>
       <h3>In Progress</h3>
+
       <ShareAndFavorite />
       {
         selectedRecipe.map((recipe) => (
@@ -97,6 +98,7 @@ function RecipeInProgress() {
               { recipe.strAlcoholic
                 ? `${recipe.strCategory} ${recipe.strAlcoholic}`
                 : recipe.strCategory}
+
             </p>
           </div>
         ))
@@ -145,7 +147,6 @@ function RecipeInProgress() {
           </div>
         ))
       }
-
       <h3>Intructions:</h3>
       {
         selectedRecipe.length > 0 && (

@@ -23,7 +23,7 @@ function Profile() {
   return (
     <div>
       <Header />
-      <div>
+      <div className="profile">
         <h3 data-testid="profile-email">
           {email}
         </h3>

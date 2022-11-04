@@ -28,34 +28,40 @@ export default function Login() {
     next ? <Redirect
       to="/meals"
     /> : (
-      <>
-        <h1>Login</h1>
-        Email :
-        <input
-          name="email"
-          type="text"
-          data-testid="email-input"
-          value={ email }
-          onChange={ (evento) => setEmail(evento.target.value) }
-        />
-        senha :
-        <input
-          name="password"
-          type="password"
-          data-testid="password-input"
-          value={ password }
-          onChange={ (evento) => setPassword(evento.target.value) }
-        />
-        <button
-          type="button"
-          value="Enter"
-          data-testid="login-submit-btn"
-          disabled={ isDisable }
-          onClick={ handleClick }
-        >
-          Enter
-        </button>
-      </>
+      <div className="backGround">
+        <forms className="container">
+          <h1>Login</h1>
+          <input
+            name="email"
+            placeholder="Email"
+            className="input"
+            type="text"
+            data-testid="email-input"
+            value={ email }
+            onChange={ (evento) => setEmail(evento.target.value) }
+          />
+          <input
+            name="password"
+            className="input"
+            placeholder="Password"
+            type="password"
+            data-testid="password-input"
+            value={ password }
+            onChange={ (evento) => setPassword(evento.target.value) }
+          />
+          <button
+            className="buttonEntrar"
+            type="button"
+            value="Enter"
+            data-testid="login-submit-btn"
+            disabled={ isDisable }
+            onClick={ handleClick }
+          >
+            Enter
+          </button>
+
+        </forms>
+      </div>
     )
   );
 }
