@@ -23,8 +23,6 @@ function RecipeInProgress() {
   const [ingredChecked, setIngredChecked] = useState([]);
   const [currPage, setCurrPage] = useState('');
   const getyoutubeParam = 32;
-
-
   const setListIngredientStorage = (idRecipe, ingrendient) => {
     const objLocalSt = getInProgressRecipe();
     const exist = objLocalSt[currPage][idRecipe].includes(ingrendient);
@@ -120,7 +118,6 @@ function RecipeInProgress() {
               encrypted-media;
               gyroscope;
               picture-in-picture"
-
             allowFullScreen
           />
         )
@@ -135,7 +132,7 @@ function RecipeInProgress() {
           >
             <label
               htmlFor={ `${index}-ingredient` }
-              data-testid={ `${index}-ingredient-step` 
+              data-testid={ `${index}-ingredient-step` }
               className={ ingredChecked.includes(ingredient) ? 'checked' : '' }
             >
               <input
@@ -145,13 +142,12 @@ function RecipeInProgress() {
                 onChange={ handleClick }
                 checked={ ingredChecked.includes(ingredient) }
               />
-
               {`${ingredient}: ${measures[index]}`}
             </label>
           </div>
         ))
       }
-      <h3 className="titulo">Intructions:</h3>
+      <h3>Intructions:</h3>
       {
         selectedRecipe.length > 0 && (
           <p data-testid="instructions">{selectedRecipe[0].strInstructions}</p>
