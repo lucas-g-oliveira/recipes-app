@@ -34,7 +34,7 @@ export default function Login() {
           <input
             name="email"
             placeholder="Email"
-            id="input-email"
+            className="input"
             type="text"
             data-testid="email-input"
             value={ email }
@@ -42,7 +42,7 @@ export default function Login() {
           />
           <input
             name="password"
-            id="input-senha"
+            className="input"
             placeholder="Password"
             type="password"
             data-testid="password-input"
