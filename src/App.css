@@ -8,17 +8,18 @@
 }
 
 .header {
-  display: flex;
-  flex-direction: row-reverse;
-  justify-content: space-evenly;
   align-items: center;
   align-self: start;
   background: rgb(14, 196, 165);
-  top: 0;
+  display: flex;
+  flex-direction: row-reverse;
   height: 60px;
+  justify-content: space-evenly;
   position: fixed;
+  top: 0;
   width: 100%;
 }
+
 .butaoDeConcluir {
   display: flex;
 }
@@ -34,16 +35,16 @@
   height: 100%;
 }
 
-.buttonEntrar:enabled {
-  background-color: rgb(14, 196, 165);
+.buttonEntrar {
+  background: rgb(72, 124, 106);
+  border: none;
   border-radius: 10px;
-  border: 1px solid black;
   height: 50px;
 }
 
-.buttonEntrar{
-  background:rgb(72, 124, 106);
-  border: none;
+.buttonEntrar:enabled {
+  background-color: rgb(14, 196, 165);
+  border: 1px solid black;
   border-radius: 10px;
   height: 50px;
 }
@@ -128,7 +129,6 @@ h2 { margin: 5px; }
 }
 
 .container {
-  justify-content: center;
   color: rgb(14, 196, 165);
   display: flex;
   flex-direction: column;
@@ -143,15 +143,14 @@ h2 { margin: 5px; }
   max-height: 80vh;
 }
 
-.searchBar{
+.searchBar {
+  background-color: rgb(14, 196, 165);
+  border: solid 10px  rgb(14, 196, 165);
   display: flex;
   flex-direction: column;
-  background-color:  rgb(14, 196, 165);
-  border: solid 10px  rgb(14, 196, 165);
   position: absolute;
   top: 100px;
   width: 100%;
-  
 }
 
 footer {
@@ -218,8 +217,8 @@ footer {
 }
 
 .startRecipeBtn {
-  bottom: 0;
   background-color: rgb(14, 196, 165);
+  bottom: 0;
   color: white;
   padding: 10px 0;
   position: fixed;
@@ -269,7 +268,6 @@ footer {
 
 .recipe-details {
   padding-top: 18%;
-  
 }
 
 .imgSuggestion {
@@ -286,24 +284,21 @@ h3 {
   text-decoration: line-through solid black;
 }
 
-/* https://blog.betrybe.com/react/react-carousel/ */
-
-/* https://www.w3schools.com/howto/howto_css_menu_horizontal_scroll.asp */
 .profile {
-  margin-top: 64px;  
+  align-content: center;
+  align-items: stretch;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  align-items: stretch;
-  align-content: center;
-  justify-items: center;
   height: 250px;
+  justify-content: space-between;
+  justify-items: center;
+  margin-top: 64px;
 }
 
 .filter-btn-container {
   display: flex;
   justify-content: space-around;
-  margin: 70px auto 10px auto;
+  margin: 70px auto 10px;
   max-width: 360px;
 }
 
@@ -325,5 +320,4 @@ h3 {
 .simple-recipe-title {
   color: black;
   padding: 10px 0;
-  /* text-align: left; */
 }
